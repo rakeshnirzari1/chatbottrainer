@@ -1,0 +1,462 @@
+import { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Bot, Loader2, CheckCircle, DollarSign, Activity, Clock, RotateCcw } from 'lucide-react';
+import { useAuth } from '../contexts/AuthContext';
+import { AuthModal } from '../components/AuthModal';
+import { crawlWebsite, CrawlProgress } from '../lib/crawler';
+import { calculatePrice, formatPrice } from '../lib/pricing';
+import { saveOnboardingState, loadOnboardingState } from '../lib/storage';
+
+type Step = 'input' | 'crawling' | 'selection';
+
+export function Onboarding() {
+  const navigate = useNavigate();
+  const { user } = useAuth();
+  const [step, setStep] = useState<Step>('input');
+  const [websiteUrl, setWebsiteUrl] = useState('');
+  const [crawlLogs, setCrawlLogs] = useState<string[]>([]);
+  const [discoveredUrls, setDiscoveredUrls] = useState<string[]>([]);
+  const [crawlStats, setCrawlStats] = useState({ discovered: 0, visited: 0, queued: 0, eta: 0 });
+  const [isCrawling, setIsCrawling] = useState(false);
+  const [allUrls, setAllUrls] = useState<string[]>([]);
+  const [selectedUrls, setSelectedUrls] = useState<Set<string>>(new Set());
+  const [showAuthModal, setShowAuthModal] = useState(false);
+  const logEndRef = useRef<HTMLDivElement>(null);
+  const urlsEndRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const saved = loadOnboardingState();
+    if (saved && saved.allUrls.length > 0) {
+      setWebsiteUrl(saved.websiteUrl);
+      setAllUrls(saved.allUrls);
+      setSelectedUrls(new Set(saved.selectedUrls));
+      setStep('selection');
+    }
+  }, []);
+
+  useEffect(() => {
+    if (step === 'selection') {
+      saveOnboardingState({
+        websiteUrl,
+        selectedUrls: Array.from(selectedUrls),
+        allUrls
+      });
+    }
+  }, [step, websiteUrl, selectedUrls, allUrls]);
+
+  useEffect(() => {
+    if (logEndRef.current && crawlLogs.length > 0) {
+      setTimeout(() => {
+        logEndRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
+      }, 100);
+    }
+  }, [crawlLogs]);
+
+  useEffect(() => {
+    if (urlsEndRef.current && discoveredUrls.length > 0) {
+      setTimeout(() => {
+        urlsEndRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
+      }, 100);
+    }
+  }, [discoveredUrls]);
+
+  const handleReset = () => {
+    setStep('input');
+    setWebsiteUrl('');
+    setAllUrls([]);
+    setSelectedUrls(new Set());
+    setCrawlLogs([]);
+    setDiscoveredUrls([]);
+    setCrawlStats({ discovered: 0, visited: 0, queued: 0, eta: 0 });
+  };
+
+  const handleStartCrawl = async () => {
+    if (!websiteUrl) return;
+
+    let url = websiteUrl.trim();
+    if (!url.startsWith('http://') && !url.startsWith('https://')) {
+      url = 'https://' + url;
+    }
+
+    setStep('crawling');
+    setIsCrawling(true);
+    setCrawlLogs([]);
+    setDiscoveredUrls([]);
+    setCrawlStats({ discovered: 0, visited: 0, queued: 0, eta: 0 });
+
+    try {
+      const urls = await crawlWebsite(url, (progress: CrawlProgress) => {
+        if (progress.type === 'log' && progress.message) {
+          setCrawlLogs(prev => [...prev, progress.message!]);
+        }
+
+        if (progress.type === 'urls' && progress.urls) {
+          setDiscoveredUrls(progress.urls);
+        }
+
+        if (progress.type === 'progress') {
+          setCrawlStats({
+            discovered: progress.discovered || 0,
+            visited: progress.visited || 0,
+            queued: progress.queued || 0,
+            eta: progress.eta || 0
+          });
+        }
+      });
+
+      setAllUrls(urls);
+      setSelectedUrls(new Set(urls));
+      setIsCrawling(false);
+      setStep('selection');
+    } catch (error) {
+      alert('Failed to crawl website. Please check the URL and try again.');
+      setStep('input');
+      setIsCrawling(false);
+    }
+  };
+
+  const handleToggleUrl = (url: string) => {
+    const newSelected = new Set(selectedUrls);
+    if (newSelected.has(url)) {
+      newSelected.delete(url);
+    } else {
+      newSelected.add(url);
+    }
+    setSelectedUrls(newSelected);
+  };
+
+  const handleToggleAll = () => {
+    if (selectedUrls.size === allUrls.length) {
+      setSelectedUrls(new Set());
+    } else {
+      setSelectedUrls(new Set(allUrls));
+    }
+  };
+
+  const handleProceedToPayment = () => {
+    if (selectedUrls.size === 0) {
+      alert('Please select at least one URL');
+      return;
+    }
+
+    const price = calculatePrice(selectedUrls.size);
+    if (price === -1) {
+      alert('Please select up to 1000 URLs or contact us for custom pricing');
+      return;
+    }
+
+    if (!user) {
+      setShowAuthModal(true);
+      return;
+    }
+
+    navigate('/checkout', {
+      state: {
+        websiteUrl,
+        selectedUrls: Array.from(selectedUrls),
+        totalUrls: selectedUrls.size,
+        price
+      }
+    });
+  };
+
+  const price = calculatePrice(selectedUrls.size);
+  const canProceed = price !== -1;
+
+  if (step === 'input') {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-slate-50">
+        <nav className="container mx-auto px-6 py-6 flex items-center justify-between">
+          <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate('/')}>
+            <Bot className="text-blue-600" size={32} />
+            <span className="text-2xl font-bold text-gray-900">ChatbotTrainer</span>
+          </div>
+          <button
+            onClick={() => navigate('/')}
+            className="px-4 py-2 text-gray-600 hover:text-gray-900 font-medium transition"
+          >
+            Back to Home
+          </button>
+        </nav>
+
+        <div className="container mx-auto px-6 py-20">
+          <div className="max-w-2xl mx-auto">
+            <h1 className="text-5xl font-bold text-gray-900 mb-4 text-center">
+              Let's Get Started
+            </h1>
+            <p className="text-xl text-gray-600 mb-12 text-center">
+              Enter your website URL and we'll crawl it to train your chatbot
+            </p>
+
+            <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Website URL
+              </label>
+              <input
+                type="text"
+                value={websiteUrl}
+                onChange={(e) => setWebsiteUrl(e.target.value)}
+                placeholder="https://example.com"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg text-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent mb-6"
+                onKeyPress={(e) => e.key === 'Enter' && handleStartCrawl()}
+              />
+
+              <button
+                onClick={handleStartCrawl}
+                disabled={!websiteUrl}
+                className="w-full bg-blue-600 text-white py-4 rounded-lg font-bold text-lg hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Let's Go
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (step === 'crawling') {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-slate-50">
+        <nav className="container mx-auto px-6 py-6 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Bot className="text-blue-600" size={32} />
+            <span className="text-2xl font-bold text-gray-900">ChatbotTrainer</span>
+          </div>
+          <button
+            onClick={handleReset}
+            className="flex items-center gap-2 px-4 py-2 text-gray-600 hover:text-gray-900 font-medium transition"
+          >
+            <RotateCcw size={18} />
+            Try Another URL
+          </button>
+        </nav>
+
+        <div className="container mx-auto px-6 py-12">
+          <div className="max-w-5xl mx-auto">
+            <div className="text-center mb-8">
+              <div className="inline-flex items-center gap-3 mb-4">
+                <div className="relative">
+                  <Loader2 className="w-12 h-12 text-blue-600 animate-spin" />
+                  <Activity className="w-6 h-6 text-blue-400 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 animate-pulse" />
+                </div>
+              </div>
+              <h2 className="text-3xl font-bold text-gray-900 mb-2">
+                Crawling Your Website
+              </h2>
+              <p className="text-gray-600">
+                Discovering and analyzing pages in real-time...
+              </p>
+            </div>
+
+            <div className="grid lg:grid-cols-3 gap-6 mb-6">
+              <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                <div className="text-sm text-gray-600 mb-1">Discovered</div>
+                <div className="text-3xl font-bold text-blue-600">
+                  {discoveredUrls.length}
+                </div>
+              </div>
+              <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                <div className="text-sm text-gray-600 mb-1">In Queue</div>
+                <div className="text-3xl font-bold text-orange-600">
+                  {crawlStats.queued}
+                </div>
+              </div>
+              <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex items-center justify-between">
+                <div>
+                  <div className="text-sm text-gray-600 mb-1">Est. Time</div>
+                  <div className="text-3xl font-bold text-green-600">
+                    {crawlStats.eta > 0 ? `${crawlStats.eta}s` : '-'}
+                  </div>
+                </div>
+                <Clock className="text-green-500" size={24} />
+              </div>
+            </div>
+
+            <div className="grid lg:grid-cols-2 gap-6">
+              <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-100">
+                <h3 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
+                  <Activity className="text-blue-600" size={20} />
+                  Crawl Activity
+                </h3>
+                <div className="bg-gray-900 rounded-lg p-4 h-96 overflow-y-auto font-mono text-sm">
+                  {crawlLogs.map((log, index) => (
+                    <div
+                      key={index}
+                      className="text-green-400 mb-1 animate-in fade-in slide-in-from-bottom-2"
+                    >
+                      <span className="text-gray-500">&gt;</span> {log}
+                    </div>
+                  ))}
+                  <div ref={logEndRef} />
+                </div>
+              </div>
+
+              <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-100">
+                <h3 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
+                  <CheckCircle className="text-green-600" size={20} />
+                  Discovered URLs ({discoveredUrls.length})
+                </h3>
+                <div className="max-h-96 overflow-y-auto space-y-2" id="urls-container">
+                  {discoveredUrls.slice(-50).map((url, index) => (
+                    <div
+                      key={index}
+                      className="flex items-center gap-2 p-2 bg-gray-50 rounded-lg text-sm animate-in fade-in"
+                    >
+                      <CheckCircle className="text-green-500 flex-shrink-0" size={14} />
+                      <span className="text-gray-700 truncate">{url}</span>
+                    </div>
+                  ))}
+                  <div ref={urlsEndRef} />
+                </div>
+              </div>
+            </div>
+
+            {!isCrawling && discoveredUrls.length > 0 && (
+              <div className="mt-6 text-center">
+                <button
+                  onClick={() => setStep('selection')}
+                  className="px-8 py-4 bg-blue-600 text-white rounded-lg font-bold text-lg hover:bg-blue-700 transition"
+                >
+                  Continue to Selection
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-slate-50">
+      <nav className="container mx-auto px-6 py-6 flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <Bot className="text-blue-600" size={32} />
+          <span className="text-2xl font-bold text-gray-900">ChatbotTrainer</span>
+        </div>
+        <button
+          onClick={handleReset}
+          className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg font-medium hover:bg-gray-50 transition"
+        >
+          <RotateCcw size={18} />
+          Try Another URL
+        </button>
+      </nav>
+
+      <div className="container mx-auto px-6 py-12">
+        <div className="max-w-5xl mx-auto">
+          <div className="mb-8">
+            <h2 className="text-4xl font-bold text-gray-900 mb-2">
+              Select Pages to Train
+            </h2>
+            <p className="text-gray-600">
+              Choose which pages to include in your chatbot training
+            </p>
+          </div>
+
+          <div className="grid lg:grid-cols-3 gap-8">
+            <div className="lg:col-span-2">
+              <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-100">
+                <div className="flex items-center justify-between mb-6">
+                  <div className="text-2xl font-bold text-gray-900">
+                    {allUrls.length} URLs Found
+                  </div>
+                  <button
+                    onClick={handleToggleAll}
+                    className="px-4 py-2 border border-gray-300 rounded-lg font-medium hover:bg-gray-50 transition"
+                  >
+                    {selectedUrls.size === allUrls.length ? 'Deselect All' : 'Select All'}
+                  </button>
+                </div>
+
+                <div className="max-h-[600px] overflow-y-auto space-y-2">
+                  {allUrls.map((url) => (
+                    <label
+                      key={url}
+                      className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 cursor-pointer transition"
+                    >
+                      <input
+                        type="checkbox"
+                        checked={selectedUrls.has(url)}
+                        onChange={() => handleToggleUrl(url)}
+                        className="w-4 h-4 text-blue-600 rounded focus:ring-2 focus:ring-blue-500"
+                      />
+                      <span className="text-sm text-gray-700 truncate flex-1">{url}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="lg:col-span-1">
+              <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 sticky top-6">
+                <div className="flex items-center gap-2 mb-6">
+                  <DollarSign className="text-blue-600" size={24} />
+                  <h3 className="text-xl font-bold text-gray-900">Pricing</h3>
+                </div>
+
+                <div className="mb-6">
+                  <div className="text-gray-600 mb-2">Selected URLs</div>
+                  <div className="text-4xl font-bold text-gray-900">{selectedUrls.size}</div>
+                </div>
+
+                <div className="mb-6 p-4 bg-blue-50 rounded-lg">
+                  <div className="text-gray-600 text-sm mb-1">Total Price</div>
+                  <div className="text-3xl font-bold text-blue-600">
+                    {canProceed ? formatPrice(price) : 'Custom'}
+                  </div>
+                </div>
+
+                {!canProceed && (
+                  <div className="mb-4 p-3 bg-orange-50 border border-orange-200 rounded-lg">
+                    <p className="text-sm text-orange-800">
+                      Please select up to 1000 URLs or contact us for custom pricing
+                    </p>
+                  </div>
+                )}
+
+                <button
+                  onClick={handleProceedToPayment}
+                  disabled={selectedUrls.size === 0 || !canProceed}
+                  className="w-full bg-blue-600 text-white py-3 rounded-lg font-bold hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Proceed to Payment
+                </button>
+
+                <div className="mt-6 pt-6 border-t border-gray-200 text-xs text-gray-500 space-y-1">
+                  <div className="flex justify-between">
+                    <span>1-10 URLs</span>
+                    <span className="font-semibold">$50</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>11-50 URLs</span>
+                    <span className="font-semibold">$200</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>51-200 URLs</span>
+                    <span className="font-semibold">$500</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>201-500 URLs</span>
+                    <span className="font-semibold">$900</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>501-1000 URLs</span>
+                    <span className="font-semibold">$1,200</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <AuthModal
+        isOpen={showAuthModal}
+        onClose={() => setShowAuthModal(false)}
+        defaultMode="signup"
+      />
+    </div>
+  );
+}
