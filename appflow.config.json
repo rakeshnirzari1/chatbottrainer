@@ -1,0 +1,12 @@
+{
+  "capacitor": {
+    "ios": {
+      "podInstall": true
+    },
+    "android": {
+      "gradle": {
+        "buildType": "release"
+      }
+    }
+  }
+}
