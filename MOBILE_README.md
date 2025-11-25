@@ -2,6 +2,22 @@
 
 This app is now configured with **Capacitor** for iOS and Android deployment!
 
+## ⚠️ IMPORTANT: Git Commit Requirements
+
+**You MUST commit the `android/` and `ios/` folders to your Git repository!**
+
+These native project folders are required for CI/CD builds (like Ionic Appflow, GitHub Actions, etc.). Unlike typical web projects, Capacitor native folders should be version controlled.
+
+```bash
+git add android/ ios/
+git commit -m "Add Capacitor native projects"
+git push
+```
+
+The `.gitignore` is already configured to:
+- ✅ **Include** native project files (android/ and ios/ folders)
+- ❌ **Exclude** build artifacts (build/, .gradle/, Pods/, etc.)
+
 ## Prerequisites
 
 ### For iOS Development
