@@ -57,10 +57,20 @@ export function Dashboard() {
 
     checkAdmin();
     loadProjects();
+  }, [user, navigate]);
+
+  useEffect(() => {
+    const hasActiveProjects = projects.some(
+      p => p.status === 'pending' || p.status === 'crawling' || p.status === 'training'
+    );
+
+    if (!hasActiveProjects) {
+      return;
+    }
 
     const interval = setInterval(loadProjects, 5000);
     return () => clearInterval(interval);
-  }, [user, navigate]);
+  }, [projects]);
 
   const checkAdmin = async () => {
     const adminStatus = await isAdmin();
