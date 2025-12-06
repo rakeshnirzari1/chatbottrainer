@@ -3,11 +3,37 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ChatbotTrainer SAAS Build</title>
-    <meta property="og:image" content="https://bolt.new/static/og_default.png">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content="https://bolt.new/static/og_default.png">
+
+    <!-- Mobile-optimized viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+
+    <!-- iOS Safari specific -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="ChatbotTrainer" />
+
+    <!-- Prevent text size adjustment on orientation change -->
+    <meta name="format-detection" content="telephone=no" />
+
+    <title>ChatbotTrainer</title>
+
+    <!-- Open Graph / Social Media -->
+    <meta property="og:title" content="ChatbotTrainer - AI Chatbot Platform" />
+    <meta property="og:description" content="Transform your website into an intelligent AI chatbot" />
+    <meta property="og:image" content="https://bolt.new/static/og_default.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://bolt.new/static/og_default.png" />
+
+    <!-- GitHub Pages SPA redirect handling -->
+    <script>
+      (function() {
+        var redirect = sessionStorage.redirect;
+        delete sessionStorage.redirect;
+        if (redirect && redirect !== location.href) {
+          history.replaceState(null, null, redirect);
+        }
+      })();
+    </script>
 </head>
   <body>
     <div id="root"></div>
