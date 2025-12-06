@@ -23,18 +23,18 @@ export function Terms() {
             <div className="max-w-4xl mx-auto prose prose-lg">
               <div className="bg-blue-50 border border-blue-200 rounded-xl p-6 mb-8">
                 <p className="text-gray-700 mb-0">
-                  Please read these Terms and Conditions carefully before using ChatbotTrainer. By accessing or using our service, you agree to be bound by these terms.
+                  Please read these Terms and Conditions carefully before using Websitebot.com.au. By accessing or using our service, you agree to be bound by these terms.
                 </p>
               </div>
 
               <h2 className="text-3xl font-bold text-gray-900 mb-4 mt-8">1. Acceptance of Terms</h2>
               <p className="text-gray-600 leading-relaxed mb-6">
-                By accessing and using ChatbotTrainer ("the Service"), you accept and agree to be bound by the terms and provision of this agreement. If you do not agree to these Terms and Conditions, please do not use the Service.
+                By accessing and using Websitebot.com.au ("the Service"), you accept and agree to be bound by the terms and provision of this agreement. If you do not agree to these Terms and Conditions, please do not use the Service.
               </p>
 
               <h2 className="text-3xl font-bold text-gray-900 mb-4 mt-8">2. Description of Service</h2>
               <p className="text-gray-600 leading-relaxed mb-6">
-                ChatbotTrainer provides an AI-powered chatbot creation and training platform that allows users to create custom chatbots based on their website content. The Service includes website crawling, content extraction, AI training, and chatbot deployment features.
+                Websitebot.com.au provides an AI-powered chatbot creation and training platform that allows users to create custom chatbots based on their website content. The Service includes website crawling, content extraction, AI training, and chatbot deployment features.
               </p>
 
               <h2 className="text-3xl font-bold text-gray-900 mb-4 mt-8">3. User Accounts</h2>
@@ -63,7 +63,7 @@ export function Terms() {
 
               <h2 className="text-3xl font-bold text-gray-900 mb-4 mt-8">5. Payment Terms</h2>
               <p className="text-gray-600 leading-relaxed mb-4">
-                ChatbotTrainer operates on a one-time payment model:
+                Websitebot.com.au operates on a one-time payment model:
               </p>
               <ul className="list-disc pl-6 text-gray-600 space-y-2 mb-6">
                 <li>Prices are based on the number of URLs you wish to train your chatbot on</li>
@@ -75,7 +75,7 @@ export function Terms() {
 
               <h2 className="text-3xl font-bold text-gray-900 mb-4 mt-8">6. Intellectual Property</h2>
               <p className="text-gray-600 leading-relaxed mb-6">
-                The Service and its original content, features, and functionality are owned by ChatbotTrainer and are protected by international copyright, trademark, and other intellectual property laws. You retain all rights to your content, and we claim no ownership over it.
+                The Service and its original content, features, and functionality are owned by Websitebot.com.au and are protected by international copyright, trademark, and other intellectual property laws. You retain all rights to your content, and we claim no ownership over it.
               </p>
 
               <h2 className="text-3xl font-bold text-gray-900 mb-4 mt-8">7. Data Collection and Use</h2>
@@ -90,7 +90,7 @@ export function Terms() {
 
               <h2 className="text-3xl font-bold text-gray-900 mb-4 mt-8">9. Limitation of Liability</h2>
               <p className="text-gray-600 leading-relaxed mb-6">
-                To the maximum extent permitted by law, ChatbotTrainer shall not be liable for any indirect, incidental, special, consequential, or punitive damages resulting from your use of or inability to use the Service. Our total liability shall not exceed the amount you paid for the Service.
+                To the maximum extent permitted by law, Websitebot.com.au shall not be liable for any indirect, incidental, special, consequential, or punitive damages resulting from your use of or inability to use the Service. Our total liability shall not exceed the amount you paid for the Service.
               </p>
 
               <h2 className="text-3xl font-bold text-gray-900 mb-4 mt-8">10. Warranty Disclaimer</h2>
@@ -100,7 +100,7 @@ export function Terms() {
 
               <h2 className="text-3xl font-bold text-gray-900 mb-4 mt-8">11. Indemnification</h2>
               <p className="text-gray-600 leading-relaxed mb-6">
-                You agree to indemnify and hold harmless ChatbotTrainer and its officers, directors, employees, and agents from any claims, damages, losses, liabilities, and expenses arising from your use of the Service or violation of these Terms.
+                You agree to indemnify and hold harmless Websitebot.com.au and its officers, directors, employees, and agents from any claims, damages, losses, liabilities, and expenses arising from your use of the Service or violation of these Terms.
               </p>
 
               <h2 className="text-3xl font-bold text-gray-900 mb-4 mt-8">12. Termination</h2>
@@ -124,7 +124,7 @@ export function Terms() {
               </p>
               <div className="bg-gray-50 rounded-xl p-6 border border-gray-200">
                 <p className="text-gray-700 mb-2">
-                  <strong>Email:</strong> legal@chatbottrainer.com
+                  <strong>Email:</strong> support@websitebot.com.au
                 </p>
                 <p className="text-gray-700 mb-2">
                   <strong>Address:</strong> 123 AI Street, Tech City, TC 12345
@@ -136,7 +136,7 @@ export function Terms() {
 
               <div className="bg-blue-50 border border-blue-200 rounded-xl p-6 mt-8">
                 <p className="text-gray-700 mb-0">
-                  By using ChatbotTrainer, you acknowledge that you have read, understood, and agree to be bound by these Terms and Conditions.
+                  By using Websitebot.com.au, you acknowledge that you have read, understood, and agree to be bound by these Terms and Conditions.
                 </p>
               </div>
             </div>

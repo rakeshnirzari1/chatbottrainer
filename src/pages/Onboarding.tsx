@@ -205,7 +205,7 @@ export function Onboarding() {
         <nav className="container mx-auto px-6 py-6 flex items-center justify-between">
           <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate('/')}>
             <Bot className="text-blue-600" size={32} />
-            <span className="text-2xl font-bold text-gray-900">ChatbotTrainer</span>
+            <span className="text-2xl font-bold text-gray-900">Websitebot.com.au</span>
           </div>
           <button
             onClick={() => navigate('/')}
@@ -257,7 +257,7 @@ export function Onboarding() {
         <nav className="container mx-auto px-6 py-6 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Bot className="text-blue-600" size={32} />
-            <span className="text-2xl font-bold text-gray-900">ChatbotTrainer</span>
+            <span className="text-2xl font-bold text-gray-900">Websitebot.com.au</span>
           </div>
           <button
             onClick={handleReset}
@@ -369,7 +369,7 @@ export function Onboarding() {
       <nav className="container mx-auto px-6 py-6 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Bot className="text-blue-600" size={32} />
-          <span className="text-2xl font-bold text-gray-900">ChatbotTrainer</span>
+          <span className="text-2xl font-bold text-gray-900">Websitebot.com.au</span>
         </div>
         <button
           onClick={handleReset}
@@ -515,7 +515,7 @@ export function Onboarding() {
                 <div className="mt-6 pt-6 border-t border-gray-200 text-xs text-gray-500 space-y-1">
                   <div className="flex justify-between">
                     <span>1-10 URLs</span>
-                    <span className="font-semibold">$50</span>
+                    <span className="font-semibold">$100</span>
                   </div>
                   <div className="flex justify-between">
                     <span>11-50 URLs</span>

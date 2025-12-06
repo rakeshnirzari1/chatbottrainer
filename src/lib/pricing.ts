@@ -1,5 +1,5 @@
 export function calculatePrice(urlCount: number): number {
-  if (urlCount <= 10) return 5000;
+  if (urlCount <= 10) return 10000;
   if (urlCount <= 50) return 20000;
   if (urlCount <= 200) return 50000;
   if (urlCount <= 500) return 90000;

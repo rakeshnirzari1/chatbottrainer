@@ -60,8 +60,8 @@ export function Contact() {
                     </div>
                     <div>
                       <h3 className="font-semibold text-gray-900 mb-1">Email</h3>
-                      <a href="mailto:support@chatbottrainer.com" className="text-gray-600 hover:text-blue-600 transition">
-                        support@chatbottrainer.com
+                      <a href="mailto:support@websitebot.com.au" className="text-gray-600 hover:text-blue-600 transition">
+                        support@websitebot.com.au
                       </a>
                     </div>
                   </div>
@@ -72,8 +72,8 @@ export function Contact() {
                     </div>
                     <div>
                       <h3 className="font-semibold text-gray-900 mb-1">Phone</h3>
-                      <p className="text-gray-600">+1 (555) 123-4567</p>
-                      <p className="text-sm text-gray-500 mt-1">Mon-Fri 9am-6pm EST</p>
+                      <p className="text-gray-600">Available via email</p>
+                      <p className="text-sm text-gray-500 mt-1">Mon-Fri 9am-5pm AEST</p>
                     </div>
                   </div>
 
@@ -82,22 +82,20 @@ export function Contact() {
                       <MapPin className="text-orange-600" size={24} />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-gray-900 mb-1">Office</h3>
+                      <h3 className="font-semibold text-gray-900 mb-1">Location</h3>
                       <p className="text-gray-600">
-                        123 AI Street<br />
-                        Tech City, TC 12345<br />
-                        United States
+                        Sydney, NSW<br />
+                        Australia
                       </p>
                     </div>
                   </div>
                 </div>
 
                 <div className="mt-12 p-6 bg-gradient-to-br from-blue-50 to-slate-50 rounded-xl border border-blue-100">
-                  <h3 className="font-semibold text-gray-900 mb-2">Business Hours</h3>
+                  <h3 className="font-semibold text-gray-900 mb-2">Business Hours (AEST)</h3>
                   <div className="space-y-1 text-sm text-gray-600">
-                    <p>Monday - Friday: 9:00 AM - 6:00 PM EST</p>
-                    <p>Saturday: 10:00 AM - 4:00 PM EST</p>
-                    <p>Sunday: Closed</p>
+                    <p>Monday - Friday: 9:00 AM - 5:00 PM</p>
+                    <p>Saturday - Sunday: Closed</p>
                   </div>
                 </div>
               </div>

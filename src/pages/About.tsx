@@ -11,9 +11,9 @@ export function About() {
         <section className="bg-gradient-to-br from-blue-600 to-blue-800 text-white py-20">
           <div className="container mx-auto px-6">
             <div className="max-w-3xl mx-auto text-center">
-              <h1 className="text-5xl md:text-6xl font-bold mb-6">About ChatbotTrainer</h1>
+              <h1 className="text-5xl md:text-6xl font-bold mb-6">About Websitebot.com.au</h1>
               <p className="text-xl md:text-2xl opacity-90">
-                Empowering businesses with intelligent AI chatbots to transform customer support and engagement
+                Empowering Australian businesses with intelligent AI chatbots to transform customer support and engagement
               </p>
             </div>
           </div>
@@ -26,13 +26,13 @@ export function About() {
                 <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">Our Story</h2>
                 <div className="text-lg text-gray-600 space-y-4 text-left">
                   <p>
-                    ChatbotTrainer was founded with a simple mission: to make AI-powered customer support accessible to businesses of all sizes. We recognized that while large enterprises had the resources to build sophisticated chatbots, small and medium-sized businesses were left behind.
+                    Websitebot.com.au was founded in Sydney with a simple mission: to make AI-powered customer support accessible to Australian businesses of all sizes. We recognized that while large enterprises had the resources to build sophisticated chatbots, small and medium-sized businesses were left behind.
                   </p>
                   <p>
-                    Our team of AI engineers and customer support experts came together to create a platform that's both powerful and incredibly easy to use. We believe that every business deserves to provide instant, accurate support to their customers without needing a team of developers or a massive budget.
+                    Our team of AI engineers and customer support experts came together to create a platform that's both powerful and incredibly easy to use. Based in Sydney, Australia, we understand the unique needs of local businesses and provide dedicated support during Australian business hours.
                   </p>
                   <p>
-                    Today, we're proud to serve thousands of businesses worldwide, helping them reduce support costs, increase customer satisfaction, and scale their operations efficiently. Our platform has handled millions of conversations, and we're just getting started.
+                    Today, we're proud to serve businesses across Australia, helping them reduce support costs, increase customer satisfaction, and scale their operations efficiently. Our platform has handled millions of conversations, and we're just getting started.
                   </p>
                 </div>
               </div>

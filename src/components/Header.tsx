@@ -34,7 +34,7 @@ export function Header({ onGetStarted, showAuthButtons = true, isAdminUser = fal
           <div className="flex items-center justify-between">
             <Link to="/" className="flex items-center gap-2 hover:opacity-80 transition">
               <Bot className="text-blue-600" size={32} />
-              <span className="text-2xl font-bold text-gray-900">ChatbotTrainer</span>
+              <span className="text-2xl font-bold text-gray-900">Websitebot.com.au</span>
             </Link>
 
             <div className="hidden md:flex items-center gap-8">
