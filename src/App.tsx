@@ -11,11 +11,9 @@ import { FAQ } from './pages/FAQ';
 import { Terms } from './pages/Terms';
 import { Privacy } from './pages/Privacy';
 
-const basename = import.meta.env.BASE_URL || '/';
-
 function App() {
   return (
-    <BrowserRouter basename={basename}>
+    <BrowserRouter>
       <AuthProvider>
         <Routes>
           <Route path="/" element={<Landing />} />
