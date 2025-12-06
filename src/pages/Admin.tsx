@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Bot, LogOut, Loader2, Save, FileText, StickyNote } from 'lucide-react';
+import { Bot, LogOut, Loader2, Save, FileText, StickyNote, Download, ChevronDown, ChevronUp } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { isAdmin, getAllOrders, updateOrder, Order } from '../lib/admin';
 import { formatPrice } from '../lib/pricing';
@@ -20,6 +20,7 @@ export function Admin() {
   const [loading, setLoading] = useState(true);
   const [updating, setUpdating] = useState<string | null>(null);
   const [editingOrder, setEditingOrder] = useState<EditingOrder | null>(null);
+  const [expandedUrls, setExpandedUrls] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     checkAdminAndLoadOrders();
@@ -92,6 +93,30 @@ export function Admin() {
       default:
         return 'bg-gray-100 text-gray-800';
     }
+  };
+
+  const handleDownloadUrls = (order: Order) => {
+    const urls = Array.isArray(order.selected_urls) ? order.selected_urls : [];
+    const content = urls.join('\n');
+    const blob = new Blob([content], { type: 'text/plain' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${order.website_url.replace(/[^a-z0-9]/gi, '_')}_urls.txt`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    window.URL.revokeObjectURL(url);
+  };
+
+  const toggleUrlsExpanded = (orderId: string) => {
+    const newExpanded = new Set(expandedUrls);
+    if (newExpanded.has(orderId)) {
+      newExpanded.delete(orderId);
+    } else {
+      newExpanded.add(orderId);
+    }
+    setExpandedUrls(newExpanded);
   };
 
   if (loading) {
@@ -185,6 +210,46 @@ export function Admin() {
                           {new Date(order.created_at).toLocaleDateString()}
                         </p>
                       </div>
+                    </div>
+
+                    <div className="mb-4 p-4 bg-white rounded-lg border border-gray-200">
+                      <div className="flex items-center justify-between mb-2">
+                        <button
+                          onClick={() => toggleUrlsExpanded(order.id)}
+                          className="flex items-center gap-2 text-gray-700 hover:text-blue-600 font-semibold transition"
+                        >
+                          {expandedUrls.has(order.id) ? (
+                            <ChevronUp size={20} />
+                          ) : (
+                            <ChevronDown size={20} />
+                          )}
+                          Training URLs ({order.total_urls})
+                        </button>
+                        <button
+                          onClick={() => handleDownloadUrls(order)}
+                          className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 transition"
+                        >
+                          <Download size={16} />
+                          Download URLs
+                        </button>
+                      </div>
+
+                      {expandedUrls.has(order.id) && (
+                        <div className="mt-3 max-h-60 overflow-y-auto space-y-1">
+                          {Array.isArray(order.selected_urls) && order.selected_urls.length > 0 ? (
+                            order.selected_urls.map((url: string, index: number) => (
+                              <div
+                                key={index}
+                                className="text-sm text-gray-600 p-2 bg-gray-50 rounded hover:bg-gray-100 transition"
+                              >
+                                {index + 1}. {url}
+                              </div>
+                            ))
+                          ) : (
+                            <p className="text-sm text-gray-500 italic">No URLs available</p>
+                          )}
+                        </div>
+                      )}
                     </div>
 
                     <div className="border-t border-gray-200 pt-4 mt-4">

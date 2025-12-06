@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Bot, Loader2, CheckCircle, DollarSign, Activity, Clock, RotateCcw } from 'lucide-react';
+import { Bot, Loader2, CheckCircle, DollarSign, Activity, Clock, RotateCcw, Plus, X } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { AuthModal } from '../components/AuthModal';
 import { crawlWebsite, CrawlProgress } from '../lib/crawler';
@@ -21,6 +21,8 @@ export function Onboarding() {
   const [allUrls, setAllUrls] = useState<string[]>([]);
   const [selectedUrls, setSelectedUrls] = useState<Set<string>>(new Set());
   const [showAuthModal, setShowAuthModal] = useState(false);
+  const [manualUrl, setManualUrl] = useState('');
+  const [showManualInput, setShowManualInput] = useState(false);
   const logEndRef = useRef<HTMLDivElement>(null);
   const urlsEndRef = useRef<HTMLDivElement>(null);
 
@@ -131,6 +133,40 @@ export function Onboarding() {
     } else {
       setSelectedUrls(new Set(allUrls));
     }
+  };
+
+  const handleAddManualUrl = () => {
+    if (!manualUrl.trim()) return;
+
+    let url = manualUrl.trim();
+    if (!url.startsWith('http://') && !url.startsWith('https://')) {
+      url = 'https://' + url;
+    }
+
+    try {
+      new URL(url);
+
+      if (allUrls.includes(url)) {
+        alert('This URL is already in the list');
+        return;
+      }
+
+      const newUrls = [...allUrls, url];
+      setAllUrls(newUrls);
+      setSelectedUrls(new Set([...selectedUrls, url]));
+      setManualUrl('');
+      setShowManualInput(false);
+    } catch (error) {
+      alert('Please enter a valid URL');
+    }
+  };
+
+  const handleRemoveUrl = (urlToRemove: string) => {
+    const newUrls = allUrls.filter(url => url !== urlToRemove);
+    setAllUrls(newUrls);
+    const newSelected = new Set(selectedUrls);
+    newSelected.delete(urlToRemove);
+    setSelectedUrls(newSelected);
   };
 
   const handleProceedToPayment = () => {
@@ -360,30 +396,82 @@ export function Onboarding() {
               <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-100">
                 <div className="flex items-center justify-between mb-6">
                   <div className="text-2xl font-bold text-gray-900">
-                    {allUrls.length} URLs Found
+                    {allUrls.length} URLs Total
                   </div>
-                  <button
-                    onClick={handleToggleAll}
-                    className="px-4 py-2 border border-gray-300 rounded-lg font-medium hover:bg-gray-50 transition"
-                  >
-                    {selectedUrls.size === allUrls.length ? 'Deselect All' : 'Select All'}
-                  </button>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => setShowManualInput(!showManualInput)}
+                      className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition"
+                    >
+                      <Plus size={18} />
+                      Add URL
+                    </button>
+                    <button
+                      onClick={handleToggleAll}
+                      className="px-4 py-2 border border-gray-300 rounded-lg font-medium hover:bg-gray-50 transition"
+                    >
+                      {selectedUrls.size === allUrls.length ? 'Deselect All' : 'Select All'}
+                    </button>
+                  </div>
                 </div>
+
+                {showManualInput && (
+                  <div className="mb-4 p-4 bg-blue-50 rounded-lg border border-blue-200">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Add URL Manually
+                    </label>
+                    <div className="flex gap-2">
+                      <input
+                        type="text"
+                        value={manualUrl}
+                        onChange={(e) => setManualUrl(e.target.value)}
+                        placeholder="https://example.com/page"
+                        className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        onKeyPress={(e) => e.key === 'Enter' && handleAddManualUrl()}
+                      />
+                      <button
+                        onClick={handleAddManualUrl}
+                        className="px-4 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition"
+                      >
+                        Add
+                      </button>
+                      <button
+                        onClick={() => {
+                          setShowManualInput(false);
+                          setManualUrl('');
+                        }}
+                        className="px-4 py-2 border border-gray-300 rounded-lg font-medium hover:bg-gray-50 transition"
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                    <p className="text-xs text-gray-500 mt-2">
+                      You can add URLs from any domain. They will be included in the final price calculation.
+                    </p>
+                  </div>
+                )}
 
                 <div className="max-h-[600px] overflow-y-auto space-y-2">
                   {allUrls.map((url) => (
-                    <label
+                    <div
                       key={url}
-                      className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 cursor-pointer transition"
+                      className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition"
                     >
                       <input
                         type="checkbox"
                         checked={selectedUrls.has(url)}
                         onChange={() => handleToggleUrl(url)}
-                        className="w-4 h-4 text-blue-600 rounded focus:ring-2 focus:ring-blue-500"
+                        className="w-4 h-4 text-blue-600 rounded focus:ring-2 focus:ring-blue-500 cursor-pointer"
                       />
                       <span className="text-sm text-gray-700 truncate flex-1">{url}</span>
-                    </label>
+                      <button
+                        onClick={() => handleRemoveUrl(url)}
+                        className="text-red-500 hover:text-red-700 transition p-1"
+                        title="Remove URL"
+                      >
+                        <X size={16} />
+                      </button>
+                    </div>
                   ))}
                 </div>
               </div>
