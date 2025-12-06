@@ -192,7 +192,7 @@ export function Header({ onGetStarted, showAuthButtons = true, isAdminUser = fal
         </nav>
       </header>
 
-      {showAuthModal && <AuthModal onClose={() => setShowAuthModal(false)} />}
+      {showAuthModal && <AuthModal isOpen={showAuthModal} onClose={() => setShowAuthModal(false)} />}
     </>
   );
 }
