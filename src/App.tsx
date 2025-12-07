@@ -16,35 +16,30 @@ function ScrollToTop() {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    // Use requestAnimationFrame to ensure the scroll happens after render
     const scrollToTop = () => {
-      window.scrollTo({
-        top: 0,
-        left: 0,
-        behavior: 'auto'
-      });
+      window.scrollTo(0, 0);
     };
 
     // Scroll immediately
     scrollToTop();
     
-    // Also schedule for after render completes
-    requestAnimationFrame(() => {
-      scrollToTop();
-    });
-
-    // And one more time with a tiny delay to catch any late renders
-    const timer = setTimeout(scrollToTop, 50);
+    // Schedule additional scrolls to ensure it works
+    requestAnimationFrame(scrollToTop);
+    const timer1 = setTimeout(scrollToTop, 0);
+    const timer2 = setTimeout(scrollToTop, 100);
     
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(timer1);
+      clearTimeout(timer2);
+    };
   }, [pathname]);
 
   return null;
 }
 
-function App() {
+function AppContent() {
   return (
-    <BrowserRouter>
+    <>
       <ScrollToTop />
       <AuthProvider>
         <Routes>
@@ -60,6 +55,14 @@ function App() {
           <Route path="/admin" element={<Admin />} />
         </Routes>
       </AuthProvider>
+    </>
+  );
+}
+
+function App() {
+  return (
+    <BrowserRouter>
+      <AppContent />
     </BrowserRouter>
   );
 }
