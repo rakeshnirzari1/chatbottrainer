@@ -1,3 +1,4 @@
+// App.tsx (or App.jsx if using JS)
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import { AuthProvider } from './contexts/AuthContext';
@@ -12,31 +13,39 @@ import { FAQ } from './pages/FAQ';
 import { Terms } from './pages/Terms';
 import { Privacy } from './pages/Privacy';
 
+// ScrollToTop Component — The Magic Fix
 function ScrollToTop() {
-  const { pathname } = useLocation();
+  const { pathname, hash } = useLocation();
+
+  // Disable browser's default scroll restoration (THIS IS CRUCIAL)
+  useEffect(() => {
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+  }, []);
 
   useEffect(() => {
-    const scrollToTop = () => {
-      window.scrollTo(0, 0);
-    };
+    // If there's a hash (e.g. /about#team), scroll to that element smoothly
+    if (hash) {
+      const timer = setTimeout(() => {
+        const id = hash.replace('#', '');
+        const element = document.getElementById(id);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100); // Small delay ensures DOM is ready
 
-    // Scroll immediately
-    scrollToTop();
-    
-    // Schedule additional scrolls to ensure it works
-    requestAnimationFrame(scrollToTop);
-    const timer1 = setTimeout(scrollToTop, 0);
-    const timer2 = setTimeout(scrollToTop, 100);
-    
-    return () => {
-      clearTimeout(timer1);
-      clearTimeout(timer2);
-    };
-  }, [pathname]);
+      return () => clearTimeout(timer);
+    } else {
+      // No hash → always go to top immediately
+      window.scrollTo(0, 0);
+    }
+  }, [pathname, hash]);
 
   return null;
 }
 
+// Main App Content
 function AppContent() {
   return (
     <>
@@ -59,6 +68,7 @@ function AppContent() {
   );
 }
 
+// Main App
 function App() {
   return (
     <BrowserRouter>
