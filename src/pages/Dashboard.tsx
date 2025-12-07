@@ -263,7 +263,7 @@ export function Dashboard() {
                     )}
 
                     {(order.status === 'demo_ready' || order.status === 'ready') && order.embed_code && (
-                      <div className="mt-4 space-y-4">
+                        <div className="mt-4 space-y-4">
                         <div className="p-4 bg-cyan-50 border border-cyan-200 rounded-lg">
                           <div className="flex items-center gap-2 mb-3">
                             <Rocket className="text-cyan-600" size={18} />
@@ -271,16 +271,16 @@ export function Dashboard() {
                               {order.status === 'demo_ready' ? 'Demo Chatbot Preview' : 'Your Chatbot'}
                             </label>
                           </div>
-                          <div className="bg-white rounded-lg border border-cyan-300 overflow-hidden">
+                          <div className="bg-white rounded-lg border border-cyan-300 overflow-hidden p-2">
                             <iframe
-                              srcDoc={`<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"></head><body>${order.embed_code}</body></html>`}
-                              className="w-full h-96 sm:h-[600px] border-0"
+                              srcDoc={`<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><style>body{margin:0;padding:0;background:url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><defs><linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%234169E1;stop-opacity:1"/><stop offset="100%" style="stop-color:%239370DB;stop-opacity:1"/></linearGradient></defs><rect width="1200" height="800" fill="url(%23grad)"/><rect x="50" y="40" width="1100" height="700" fill="white" rx="20"/><rect x="70" y="60" width="1060" height="60" fill="white" stroke="%23E5E7EB" stroke-width="2"/><circle cx="90" cy="90" r="6" fill="%234169E1"/><circle cx="110" cy="90" r="6" fill="%234169E1"/><circle cx="130" cy="90" r="6" fill="%234169E1"/><text x="600" y="95" font-size="24" font-weight="bold" text-anchor="middle" fill="%23333">Your Website</text><rect x="70" y="140" width="1060" height="500" fill="%23F0F0F0"/><text x="600" y="400" font-size="40" font-weight="bold" text-anchor="middle" fill="%23999">Website Content Preview</text></svg>') center/cover no-repeat;position:relative;width:100%;height:100%;font-family:Arial,sans-serif}.chatbot-container{position:absolute;bottom:20px;right:20px;width:320px;height:400px;background:white;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,0.15);display:flex;flex-direction:column;overflow:hidden;border:1px solid %23E5E7EB}}</style></head><body><div class="chatbot-container">${order.embed_code}</div></body></html>`}
+                              className="w-full h-96 sm:h-[700px] border-0"
                               title="Chatbot Preview"
                               sandbox="allow-scripts allow-same-origin"
                             />
                           </div>
                           <p className="text-sm text-cyan-700 mt-2">
-                            Interact with your chatbot above to see it in action!
+                            Interact with your chatbot to see it in action on your website!
                           </p>
                         </div>
 
