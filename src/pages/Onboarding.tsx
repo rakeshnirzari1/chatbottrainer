@@ -4,6 +4,7 @@ import { Loader2, CheckCircle, DollarSign, Activity, Clock, RotateCcw, Plus, X }
 import { useAuth } from '../contexts/AuthContext';
 import { AuthModal } from '../components/AuthModal';
 import { Header } from '../components/Header';
+import { Logo } from '../components/Logo';
 import { crawlWebsite, CrawlProgress } from '../lib/crawler';
 import { calculatePrice, formatPrice } from '../lib/pricing';
 import { saveOnboardingState, loadOnboardingState } from '../lib/storage';
@@ -357,7 +358,7 @@ export function Onboarding() {
       <header className="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
         <nav className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
-            <div className="flex-1" />
+            <Logo />
             <button
               onClick={handleReset}
               className="flex items-center gap-2 px-3 sm:px-4 py-2 text-sm sm:text-base border border-gray-300 rounded-lg font-medium hover:bg-gray-50 transition"
