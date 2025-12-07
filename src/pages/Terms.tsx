@@ -1,4 +1,4 @@
-import { FileText, Mail, MapPin } from 'lucide-react';
+import { FileText } from 'lucide-react';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
 
@@ -127,32 +127,11 @@ export function Terms() {
                   <strong>Email:</strong> support@dashbot.com.au
                 </p>
                 <p className="text-gray-700 mb-2">
-                <div className="space-y-6 mt-6">
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-slate-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                      <Mail className="text-slate-600" size={24} />
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-gray-900 mb-1">Email</h4>
-                      <a href="mailto:support@dashbot.com.au" className="text-gray-600 hover:text-slate-600 transition">
-                        support@dashbot.com.au
-                      </a>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-slate-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                      <MapPin className="text-slate-600" size={24} />
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-gray-900 mb-1\">Location</h4>
-                      <p className="text-gray-600">
-                        Sydney, NSW<br />
-                        Australia
-                      </p>
-                    </div>
-                  </div>
-                </div>
+                  <strong>Address:</strong> 123 AI Street, Tech City, TC 12345
+                </p>
+                <p className="text-gray-700">
+                  <strong>Phone:</strong> +1 (555) 123-4567
+                </p>
               </div>
 
               <div className="bg-blue-50 border border-blue-200 rounded-xl p-6 mt-8">
