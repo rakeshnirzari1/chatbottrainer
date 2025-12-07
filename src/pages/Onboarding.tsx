@@ -47,17 +47,27 @@ export function Onboarding() {
   }, [step, websiteUrl, selectedUrls, allUrls]);
 
   useEffect(() => {
-    if (logEndRef.current && crawlLogs.length > 0) {
+    // Only auto-scroll on desktop to avoid jarring mobile experience
+    const isMobile = window.innerWidth < 768;
+    if (!isMobile && logEndRef.current && crawlLogs.length > 0) {
       setTimeout(() => {
-        logEndRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
+        const logContainer = document.querySelector('.crawl-activity-container');
+        if (logContainer) {
+          logContainer.scrollTop = logContainer.scrollHeight;
+        }
       }, 100);
     }
   }, [crawlLogs]);
 
   useEffect(() => {
-    if (urlsEndRef.current && discoveredUrls.length > 0) {
+    // Only auto-scroll on desktop to avoid jarring mobile experience
+    const isMobile = window.innerWidth < 768;
+    if (!isMobile && urlsEndRef.current && discoveredUrls.length > 0) {
       setTimeout(() => {
-        urlsEndRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
+        const urlsContainer = document.getElementById('urls-container');
+        if (urlsContainer) {
+          urlsContainer.scrollTop = urlsContainer.scrollHeight;
+        }
       }, 100);
     }
   }, [discoveredUrls]);
@@ -316,7 +326,7 @@ export function Onboarding() {
                   <Activity className="text-blue-600" size={20} />
                   Crawl Activity
                 </h3>
-                <div className="bg-gray-900 rounded-lg p-4 h-96 overflow-y-auto font-mono text-sm">
+                <div className="bg-gray-900 rounded-lg p-4 h-64 md:h-96 overflow-y-auto font-mono text-sm crawl-activity-container">
                   {crawlLogs.map((log, index) => (
                     <div
                       key={index}
@@ -334,7 +344,7 @@ export function Onboarding() {
                   <CheckCircle className="text-green-600" size={20} />
                   Discovered URLs ({discoveredUrls.length})
                 </h3>
-                <div className="max-h-96 overflow-y-auto space-y-2" id="urls-container">
+                <div className="h-64 md:h-96 overflow-y-auto space-y-2" id="urls-container">
                   {discoveredUrls.slice(-50).map((url, index) => (
                     <div
                       key={index}
