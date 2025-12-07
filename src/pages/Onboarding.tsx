@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Bot, Loader2, CheckCircle, DollarSign, Activity, Clock, RotateCcw, Plus, X } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { AuthModal } from '../components/AuthModal';
+import { Logo } from '../components/Logo';
 import { crawlWebsite, CrawlProgress } from '../lib/crawler';
 import { calculatePrice, formatPrice } from '../lib/pricing';
 import { saveOnboardingState, loadOnboardingState } from '../lib/storage';
@@ -213,10 +214,7 @@ export function Onboarding() {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-slate-50">
         <nav className="container mx-auto px-4 sm:px-6 py-4 sm:py-6 flex items-center justify-between">
-          <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate('/')}>
-            <Bot className="text-blue-600" size={28} />
-            <span className="text-xl sm:text-2xl font-bold text-gray-900">DashBot</span>
-          </div>
+          <Logo />
           <button
             onClick={() => navigate('/')}
             className="px-3 sm:px-4 py-2 text-sm sm:text-base text-gray-600 hover:text-gray-900 font-medium transition"
@@ -265,10 +263,10 @@ export function Onboarding() {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-slate-50">
         <nav className="container mx-auto px-4 sm:px-6 py-4 sm:py-6 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Bot className="text-blue-600" size={28} />
-            <span className="text-xl sm:text-2xl font-bold text-gray-900">DashBot</span>
-          </div>
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-slate-50">
+        <nav className="container mx-auto px-4 sm:px-6 py-4 sm:py-6 flex items-center justify-between">
+          <Logo />
           <button
             onClick={handleReset}
             className="flex items-center gap-2 px-3 sm:px-4 py-2 text-sm sm:text-base text-gray-600 hover:text-gray-900 font-medium transition"
@@ -277,10 +275,7 @@ export function Onboarding() {
             <span className="hidden sm:inline">Try Another URL</span>
             <span className="sm:hidden">Reset</span>
           </button>
-        </nav>
-
-        <div className="container mx-auto px-4 sm:px-6 py-8 sm:py-12">
-          <div className="max-w-5xl mx-auto">
+        </nav> className="max-w-5xl mx-auto">
             <div className="text-center mb-8">
               <div className="inline-flex items-center gap-3 mb-4">
                 <div className="relative">
@@ -382,6 +377,9 @@ export function Onboarding() {
           <Bot className="text-blue-600" size={28} />
           <span className="text-xl sm:text-2xl font-bold text-gray-900">Websitebot.com.au</span>
         </div>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-slate-50">
+      <nav className="container mx-auto px-4 sm:px-6 py-4 sm:py-6 flex items-center justify-between">
+        <Logo />
         <button
           onClick={handleReset}
           className="flex items-center gap-2 px-3 sm:px-4 py-2 text-sm sm:text-base border border-gray-300 rounded-lg font-medium hover:bg-gray-50 transition"
@@ -390,13 +388,7 @@ export function Onboarding() {
           <span className="hidden sm:inline">Try Another URL</span>
           <span className="sm:hidden">Reset</span>
         </button>
-      </nav>
-
-      <div className="container mx-auto px-4 sm:px-6 py-8 sm:py-12">
-        <div className="max-w-5xl mx-auto">
-          <div className="mb-6 sm:mb-8">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-2">
-              Select Pages to Train
+      </nav>  Select Pages to Train
             </h2>
             <p className="text-sm sm:text-base text-gray-600">
               Choose which pages to include in your free demo chatbot
