@@ -127,7 +127,7 @@ export function Terms() {
                   <strong>Email:</strong> support@dashbot.com.au
                 </p>
                 <p className="text-gray-700 mb-2">
-                  <strong>Address:</strong> 123 AI Street, Tech City, TC 12345
+                  <strong>Address:</strong> Sydney, NSW, Australia
                 </p>
                 <p className="text-gray-700">
                   <strong>Phone:</strong> +1 (555) 123-4567
