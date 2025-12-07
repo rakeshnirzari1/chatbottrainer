@@ -11,7 +11,7 @@ export function Logo({ className = '', to = '/' }: LogoProps) {
       <img
         src="/final_dashbot_logo1.png"
         alt="DashBot - Teach Your Website to Talk"
-        className="h-10 md:h-12 w-auto"
+        className="h-10 md:h-20 w-auto"
       />
     </Link>
   );
