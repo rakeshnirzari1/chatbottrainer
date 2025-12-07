@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Bot, Loader2, CheckCircle, DollarSign, Activity, Clock, RotateCcw, Plus, X } from 'lucide-react';
+import { Loader2, CheckCircle, DollarSign, Activity, Clock, RotateCcw, Plus, X } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { AuthModal } from '../components/AuthModal';
+import { Logo } from '../components/Logo';
 import { crawlWebsite, CrawlProgress } from '../lib/crawler';
 import { calculatePrice, formatPrice } from '../lib/pricing';
 import { saveOnboardingState, loadOnboardingState } from '../lib/storage';
@@ -213,10 +214,7 @@ export function Onboarding() {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-slate-50">
         <nav className="container mx-auto px-4 sm:px-6 py-4 sm:py-6 flex items-center justify-between">
-          <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate('/')}>
-            <Bot className="text-blue-600" size={28} />
-            <span className="text-xl sm:text-2xl font-bold text-gray-900">DashBot</span>
-          </div>
+          <Logo />
           <button
             onClick={() => navigate('/')}
             className="px-3 sm:px-4 py-2 text-sm sm:text-base text-gray-600 hover:text-gray-900 font-medium transition"
@@ -265,10 +263,7 @@ export function Onboarding() {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-slate-50">
         <nav className="container mx-auto px-4 sm:px-6 py-4 sm:py-6 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Bot className="text-blue-600" size={28} />
-            <span className="text-xl sm:text-2xl font-bold text-gray-900">DashBot</span>
-          </div>
+          <Logo />
           <button
             onClick={handleReset}
             className="flex items-center gap-2 px-3 sm:px-4 py-2 text-sm sm:text-base text-gray-600 hover:text-gray-900 font-medium transition"
@@ -378,10 +373,7 @@ export function Onboarding() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-slate-50">
       <nav className="container mx-auto px-4 sm:px-6 py-4 sm:py-6 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <Bot className="text-blue-600" size={28} />
-          <span className="text-xl sm:text-2xl font-bold text-gray-900">Websitebot.com.au</span>
-        </div>
+        <Logo />
         <button
           onClick={handleReset}
           className="flex items-center gap-2 px-3 sm:px-4 py-2 text-sm sm:text-base border border-gray-300 rounded-lg font-medium hover:bg-gray-50 transition"
