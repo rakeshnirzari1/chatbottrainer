@@ -354,7 +354,21 @@ export function Onboarding() {
 
   return (
     <div className="min-h-screen bg-white">
-      <Header showAuthButtons={false} />
+      <header className="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
+        <nav className="container mx-auto px-6 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex-1" />
+            <button
+              onClick={handleReset}
+              className="flex items-center gap-2 px-3 sm:px-4 py-2 text-sm sm:text-base border border-gray-300 rounded-lg font-medium hover:bg-gray-50 transition"
+            >
+              <RotateCcw size={18} />
+              <span className="hidden sm:inline">Try Another URL</span>
+              <span className="sm:hidden">Reset</span>
+            </button>
+          </div>
+        </nav>
+      </header>
 
       <div className="container mx-auto px-4 sm:px-6 py-8 sm:py-12">
         <div className="max-w-5xl mx-auto">
