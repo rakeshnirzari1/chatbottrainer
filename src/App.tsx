@@ -1,4 +1,3 @@
-// App.tsx (or App.jsx if using JS)
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import { AuthProvider } from './contexts/AuthContext';
@@ -13,39 +12,45 @@ import { FAQ } from './pages/FAQ';
 import { Terms } from './pages/Terms';
 import { Privacy } from './pages/Privacy';
 
-// ScrollToTop Component — The Magic Fix
 function ScrollToTop() {
-  const { pathname, hash } = useLocation();
-
-  // Disable browser's default scroll restoration (THIS IS CRUCIAL)
-  useEffect(() => {
-    if ('scrollRestoration' in history) {
-      history.scrollRestoration = 'manual';
-    }
-  }, []);
+  const { pathname } = useLocation();
 
   useEffect(() => {
-    // If there's a hash (e.g. /about#team), scroll to that element smoothly
-    if (hash) {
-      const timer = setTimeout(() => {
-        const id = hash.replace('#', '');
-        const element = document.getElementById(id);
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
+    // Force scroll to top using multiple methods
+    const scrollToTop = () => {
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: 'auto'
+      });
+      
+      // Also try to scroll any scrollable parent elements
+      const scrollableElements = document.querySelectorAll('[style*="overflow"]');
+      scrollableElements.forEach((el) => {
+        if (el instanceof HTMLElement) {
+          el.scrollTop = 0;
         }
-      }, 100); // Small delay ensures DOM is ready
+      });
+    };
 
-      return () => clearTimeout(timer);
-    } else {
-      // No hash → always go to top immediately
-      window.scrollTo(0, 0);
-    }
-  }, [pathname, hash]);
+    // Scroll immediately
+    scrollToTop();
+    
+    // Schedule additional scrolls with increasing delays
+    const timer1 = setTimeout(scrollToTop, 0);
+    const timer2 = setTimeout(scrollToTop, 50);
+    const timer3 = setTimeout(scrollToTop, 150);
+    
+    return () => {
+      clearTimeout(timer1);
+      clearTimeout(timer2);
+      clearTimeout(timer3);
+    };
+  }, [pathname]);
 
   return null;
 }
 
-// Main App Content
 function AppContent() {
   return (
     <>
@@ -68,7 +73,6 @@ function AppContent() {
   );
 }
 
-// Main App
 function App() {
   return (
     <BrowserRouter>
