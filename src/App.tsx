@@ -16,35 +16,35 @@ function ScrollToTop() {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    // Force scroll to top using multiple methods
+    // Disable scroll restoration
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+
+    // Function to scroll to top
     const scrollToTop = () => {
-      window.scrollTo({
-        top: 0,
-        left: 0,
-        behavior: 'auto'
-      });
+      // Scroll document
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
       
-      // Also try to scroll any scrollable parent elements
-      const scrollableElements = document.querySelectorAll('[style*="overflow"]');
-      scrollableElements.forEach((el) => {
-        if (el instanceof HTMLElement) {
-          el.scrollTop = 0;
-        }
-      });
+      // Also use window.scrollTo
+      window.scrollTo(0, 0);
     };
 
     // Scroll immediately
     scrollToTop();
     
-    // Schedule additional scrolls with increasing delays
-    const timer1 = setTimeout(scrollToTop, 0);
-    const timer2 = setTimeout(scrollToTop, 50);
-    const timer3 = setTimeout(scrollToTop, 150);
+    // Schedule multiple scroll attempts
+    const timers = [
+      setTimeout(scrollToTop, 0),
+      setTimeout(scrollToTop, 10),
+      setTimeout(scrollToTop, 50),
+      setTimeout(scrollToTop, 100),
+      setTimeout(scrollToTop, 200),
+    ];
     
     return () => {
-      clearTimeout(timer1);
-      clearTimeout(timer2);
-      clearTimeout(timer3);
+      timers.forEach(timer => clearTimeout(timer));
     };
   }, [pathname]);
 
