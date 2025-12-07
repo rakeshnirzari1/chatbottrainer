@@ -202,29 +202,29 @@ export function Onboarding() {
   if (step === 'input') {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-slate-50">
-        <nav className="container mx-auto px-6 py-6 flex items-center justify-between">
+        <nav className="container mx-auto px-4 sm:px-6 py-4 sm:py-6 flex items-center justify-between">
           <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate('/')}>
-            <Bot className="text-blue-600" size={32} />
-            <span className="text-2xl font-bold text-gray-900">Websitebot.com.au</span>
+            <Bot className="text-blue-600" size={28} />
+            <span className="text-xl sm:text-2xl font-bold text-gray-900">DashBot</span>
           </div>
           <button
             onClick={() => navigate('/')}
-            className="px-4 py-2 text-gray-600 hover:text-gray-900 font-medium transition"
+            className="px-3 sm:px-4 py-2 text-sm sm:text-base text-gray-600 hover:text-gray-900 font-medium transition"
           >
             Back to Home
           </button>
         </nav>
 
-        <div className="container mx-auto px-6 py-20">
+        <div className="container mx-auto px-4 sm:px-6 py-12 sm:py-20">
           <div className="max-w-2xl mx-auto">
-            <h1 className="text-5xl font-bold text-gray-900 mb-4 text-center">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4 text-center">
               Let's Get Started
             </h1>
-            <p className="text-xl text-gray-600 mb-12 text-center">
-              Enter your website URL and we'll crawl it to train your chatbot
+            <p className="text-lg sm:text-xl text-gray-600 mb-8 sm:mb-12 text-center">
+              Enter your website URL and we'll create your free demo chatbot
             </p>
 
-            <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100">
+            <div className="bg-white p-6 sm:p-8 rounded-2xl shadow-lg border border-gray-100">
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Website URL
               </label>
@@ -233,14 +233,14 @@ export function Onboarding() {
                 value={websiteUrl}
                 onChange={(e) => setWebsiteUrl(e.target.value)}
                 placeholder="https://example.com"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg text-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent mb-6"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg text-base sm:text-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent mb-6"
                 onKeyPress={(e) => e.key === 'Enter' && handleStartCrawl()}
               />
 
               <button
                 onClick={handleStartCrawl}
                 disabled={!websiteUrl}
-                className="w-full bg-blue-600 text-white py-4 rounded-lg font-bold text-lg hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full bg-blue-600 text-white py-3 sm:py-4 rounded-lg font-bold text-base sm:text-lg hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Let's Go
               </button>
@@ -254,33 +254,34 @@ export function Onboarding() {
   if (step === 'crawling') {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-slate-50">
-        <nav className="container mx-auto px-6 py-6 flex items-center justify-between">
+        <nav className="container mx-auto px-4 sm:px-6 py-4 sm:py-6 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Bot className="text-blue-600" size={32} />
-            <span className="text-2xl font-bold text-gray-900">Websitebot.com.au</span>
+            <Bot className="text-blue-600" size={28} />
+            <span className="text-xl sm:text-2xl font-bold text-gray-900">DashBot</span>
           </div>
           <button
             onClick={handleReset}
-            className="flex items-center gap-2 px-4 py-2 text-gray-600 hover:text-gray-900 font-medium transition"
+            className="flex items-center gap-2 px-3 sm:px-4 py-2 text-sm sm:text-base text-gray-600 hover:text-gray-900 font-medium transition"
           >
             <RotateCcw size={18} />
-            Try Another URL
+            <span className="hidden sm:inline">Try Another URL</span>
+            <span className="sm:hidden">Reset</span>
           </button>
         </nav>
 
-        <div className="container mx-auto px-6 py-12">
+        <div className="container mx-auto px-4 sm:px-6 py-8 sm:py-12">
           <div className="max-w-5xl mx-auto">
             <div className="text-center mb-8">
               <div className="inline-flex items-center gap-3 mb-4">
                 <div className="relative">
-                  <Loader2 className="w-12 h-12 text-blue-600 animate-spin" />
-                  <Activity className="w-6 h-6 text-blue-400 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 animate-pulse" />
+                  <Loader2 className="w-10 h-10 sm:w-12 sm:h-12 text-blue-600 animate-spin" />
+                  <Activity className="w-5 h-5 sm:w-6 sm:h-6 text-blue-400 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 animate-pulse" />
                 </div>
               </div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-2">
+              <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
                 Crawling Your Website
               </h2>
-              <p className="text-gray-600">
+              <p className="text-sm sm:text-base text-gray-600">
                 Discovering and analyzing pages in real-time...
               </p>
             </div>
@@ -366,49 +367,51 @@ export function Onboarding() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-slate-50">
-      <nav className="container mx-auto px-6 py-6 flex items-center justify-between">
+      <nav className="container mx-auto px-4 sm:px-6 py-4 sm:py-6 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <Bot className="text-blue-600" size={32} />
-          <span className="text-2xl font-bold text-gray-900">Websitebot.com.au</span>
+          <Bot className="text-blue-600" size={28} />
+          <span className="text-xl sm:text-2xl font-bold text-gray-900">Websitebot.com.au</span>
         </div>
         <button
           onClick={handleReset}
-          className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg font-medium hover:bg-gray-50 transition"
+          className="flex items-center gap-2 px-3 sm:px-4 py-2 text-sm sm:text-base border border-gray-300 rounded-lg font-medium hover:bg-gray-50 transition"
         >
           <RotateCcw size={18} />
-          Try Another URL
+          <span className="hidden sm:inline">Try Another URL</span>
+          <span className="sm:hidden">Reset</span>
         </button>
       </nav>
 
-      <div className="container mx-auto px-6 py-12">
+      <div className="container mx-auto px-4 sm:px-6 py-8 sm:py-12">
         <div className="max-w-5xl mx-auto">
-          <div className="mb-8">
-            <h2 className="text-4xl font-bold text-gray-900 mb-2">
+          <div className="mb-6 sm:mb-8">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-2">
               Select Pages to Train
             </h2>
-            <p className="text-gray-600">
-              Choose which pages to include in your chatbot training
+            <p className="text-sm sm:text-base text-gray-600">
+              Choose which pages to include in your free demo chatbot
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-3 gap-8">
+          <div className="grid lg:grid-cols-3 gap-6 sm:gap-8">
             <div className="lg:col-span-2">
-              <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-100">
-                <div className="flex items-center justify-between mb-6">
+              <div className="bg-white p-4 sm:p-6 rounded-2xl shadow-lg border border-gray-100">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-4">
                   <div className="text-2xl font-bold text-gray-900">
                     {allUrls.length} URLs Total
                   </div>
-                  <div className="flex gap-2">
+                  <div className="flex gap-2 w-full sm:w-auto">
                     <button
                       onClick={() => setShowManualInput(!showManualInput)}
-                      className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition"
+                      className="flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition flex-1 sm:flex-none"
                     >
                       <Plus size={18} />
-                      Add URL
+                      <span className="hidden sm:inline">Add URL</span>
+                      <span className="sm:hidden">Add</span>
                     </button>
                     <button
                       onClick={handleToggleAll}
-                      className="px-4 py-2 border border-gray-300 rounded-lg font-medium hover:bg-gray-50 transition"
+                      className="px-4 py-2 border border-gray-300 rounded-lg font-medium hover:bg-gray-50 transition flex-1 sm:flex-none"
                     >
                       {selectedUrls.size === allUrls.length ? 'Deselect All' : 'Select All'}
                     </button>
@@ -478,7 +481,7 @@ export function Onboarding() {
             </div>
 
             <div className="lg:col-span-1">
-              <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 sticky top-6">
+              <div className="bg-white p-4 sm:p-6 rounded-2xl shadow-lg border border-gray-100 lg:sticky lg:top-6">
                 <div className="flex items-center gap-2 mb-6">
                   <DollarSign className="text-blue-600" size={24} />
                   <h3 className="text-xl font-bold text-gray-900">Pricing</h3>
@@ -490,10 +493,13 @@ export function Onboarding() {
                 </div>
 
                 <div className="mb-6 p-4 bg-blue-50 rounded-lg">
-                  <div className="text-gray-600 text-sm mb-1">Total Price</div>
+                  <div className="text-gray-600 text-sm mb-1">Estimated Price</div>
                   <div className="text-3xl font-bold text-blue-600">
                     {canProceed ? formatPrice(price) : 'Custom'}
                   </div>
+                  <p className="text-xs text-gray-600 mt-2">
+                    Get your free demo first, then upgrade when ready
+                  </p>
                 </div>
 
                 {!canProceed && (
@@ -509,7 +515,7 @@ export function Onboarding() {
                   disabled={selectedUrls.size === 0 || !canProceed}
                   className="w-full bg-blue-600 text-white py-3 rounded-lg font-bold hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Proceed to Payment
+                  Get Free Demo Chatbot
                 </button>
 
                 <div className="mt-6 pt-6 border-t border-gray-200 text-xs text-gray-500 space-y-1">

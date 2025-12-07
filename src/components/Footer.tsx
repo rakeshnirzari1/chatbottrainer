@@ -11,7 +11,7 @@ export function Footer() {
           <div>
             <div className="flex items-center gap-2 mb-4">
               <Bot className="text-blue-400" size={28} />
-              <span className="text-xl font-bold text-white">Websitebot.com.au</span>
+              <span className="text-xl font-bold text-white">DashBot</span>
             </div>
             <p className="text-gray-400 mb-4">
               Transform your website into an intelligent AI chatbot that provides instant support to your customers. Based in Sydney, Australia.
@@ -60,8 +60,8 @@ export function Footer() {
             <ul className="space-y-3">
               <li className="flex items-center gap-2">
                 <Mail size={18} className="text-blue-400" />
-                <a href="mailto:support@websitebot.com.au" className="hover:text-blue-400 transition">
-                  support@websitebot.com.au
+                <a href="mailto:support@dashbot.com.au" className="hover:text-blue-400 transition">
+                  support@dashbot.com.au
                 </a>
               </li>
               <li className="flex items-start gap-2">
@@ -75,7 +75,7 @@ export function Footer() {
         <div className="border-t border-gray-800 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-gray-400 text-sm">
-              &copy; {currentYear} Websitebot.com.au. All rights reserved.
+              &copy; {currentYear} DashBot. All rights reserved.
             </p>
             <div className="flex gap-6">
               <Link to="/privacy" className="text-sm hover:text-blue-400 transition">

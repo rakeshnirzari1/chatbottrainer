@@ -17,8 +17,11 @@ export interface Order {
   total_urls: number;
   final_price_cents: number;
   stripe_payment_intent_id: string | null;
-  status: 'pending' | 'payment_received' | 'training' | 'ready';
+  status: 'pending' | 'payment_received' | 'training' | 'ready' | 'demo_requested' | 'demo_ready';
   embed_code: string | null;
+  admin_instructions?: string | null;
+  customer_name?: string;
+  customer_phone?: string;
   created_at: string;
   updated_at: string;
 }

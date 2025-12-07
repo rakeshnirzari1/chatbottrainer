@@ -11,7 +11,7 @@ export function About() {
         <section className="bg-gradient-to-br from-blue-600 to-blue-800 text-white py-20">
           <div className="container mx-auto px-6">
             <div className="max-w-3xl mx-auto text-center">
-              <h1 className="text-5xl md:text-6xl font-bold mb-6">About Websitebot.com.au</h1>
+              <h1 className="text-5xl md:text-6xl font-bold mb-6">About DashBot</h1>
               <p className="text-xl md:text-2xl opacity-90">
                 Empowering Australian businesses with intelligent AI chatbots to transform customer support and engagement
               </p>
@@ -26,7 +26,7 @@ export function About() {
                 <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">Our Story</h2>
                 <div className="text-lg text-gray-600 space-y-4 text-left">
                   <p>
-                    Websitebot.com.au was founded in Sydney with a simple mission: to make AI-powered customer support accessible to Australian businesses of all sizes. We recognized that while large enterprises had the resources to build sophisticated chatbots, small and medium-sized businesses were left behind.
+                    DashBot was founded in Sydney, Australia with a simple mission: to make AI-powered customer support accessible to Australian businesses of all sizes. We recognized that while large enterprises had the resources to build sophisticated chatbots, small and medium-sized businesses were left behind.
                   </p>
                   <p>
                     Our team of AI engineers and customer support experts came together to create a platform that's both powerful and incredibly easy to use. Based in Sydney, Australia, we understand the unique needs of local businesses and provide dedicated support during Australian business hours.

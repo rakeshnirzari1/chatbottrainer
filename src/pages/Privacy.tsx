@@ -23,7 +23,7 @@ export function Privacy() {
             <div className="max-w-4xl mx-auto prose prose-lg">
               <div className="bg-green-50 border border-green-200 rounded-xl p-6 mb-8">
                 <p className="text-gray-700 mb-0">
-                  At Websitebot.com.au, we take your privacy seriously. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our service.
+                  At DashBot, we take your privacy seriously. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our service.
                 </p>
               </div>
 
@@ -101,7 +101,7 @@ export function Privacy() {
                 <li><strong>Restriction:</strong> Request restriction of processing of your information</li>
               </ul>
               <p className="text-gray-600 leading-relaxed mb-6">
-                To exercise these rights, please contact us at support@websitebot.com.au.
+                To exercise these rights, please contact us at support@dashbot.com.au.
               </p>
 
               <h2 className="text-3xl font-bold text-gray-900 mb-4 mt-8">7. Cookies and Tracking Technologies</h2>
@@ -145,7 +145,7 @@ export function Privacy() {
               </p>
               <div className="bg-gray-50 rounded-xl p-6 border border-gray-200">
                 <p className="text-gray-700 mb-2">
-                  <strong>Email:</strong> support@websitebot.com.au
+                  <strong>Email:</strong> support@dashbot.com.au
                 </p>
                 <p className="text-gray-700 mb-2">
                   <strong>Address:</strong> 123 AI Street, Tech City, TC 12345
@@ -157,7 +157,7 @@ export function Privacy() {
 
               <div className="bg-green-50 border border-green-200 rounded-xl p-6 mt-8">
                 <p className="text-gray-700 mb-0">
-                  By using Websitebot.com.au, you acknowledge that you have read and understood this Privacy Policy and agree to its terms.
+                  By using DashBot, you acknowledge that you have read and understood this Privacy Policy and agree to its terms.
                 </p>
               </div>
             </div>

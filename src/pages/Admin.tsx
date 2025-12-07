@@ -84,6 +84,10 @@ export function Admin() {
     switch (status) {
       case 'pending':
         return 'bg-yellow-100 text-yellow-800';
+      case 'demo_requested':
+        return 'bg-purple-100 text-purple-800';
+      case 'demo_ready':
+        return 'bg-cyan-100 text-cyan-800';
       case 'payment_received':
         return 'bg-blue-100 text-blue-800';
       case 'training':
@@ -132,7 +136,7 @@ export function Admin() {
       <nav className="container mx-auto px-6 py-6 flex items-center justify-between border-b border-gray-200 bg-white/50 backdrop-blur">
         <div className="flex items-center gap-2">
           <Bot className="text-blue-600" size={32} />
-          <span className="text-2xl font-bold text-gray-900">Websitebot.com.au Admin</span>
+          <span className="text-2xl font-bold text-gray-900">DashBot Admin</span>
         </div>
         <div className="flex items-center gap-4">
           <span className="text-gray-600">{user?.email}</span>
@@ -183,12 +187,24 @@ export function Admin() {
                       </span>
                     </div>
 
-                    <div className="grid md:grid-cols-4 gap-4 mb-4 p-4 bg-gray-50 rounded-lg">
+                    <div className="grid md:grid-cols-6 gap-4 mb-4 p-4 bg-gray-50 rounded-lg">
                       <div>
                         <label className="text-xs text-gray-500 uppercase font-semibold">
                           User ID
                         </label>
                         <p className="text-gray-900 font-mono text-xs">{order.user_id.slice(0, 8)}...</p>
+                      </div>
+                      <div>
+                        <label className="text-xs text-gray-500 uppercase font-semibold">
+                          Customer Name
+                        </label>
+                        <p className="text-gray-900 font-medium">{order.customer_name || 'N/A'}</p>
+                      </div>
+                      <div>
+                        <label className="text-xs text-gray-500 uppercase font-semibold">
+                          Phone
+                        </label>
+                        <p className="text-gray-900 font-medium">{order.customer_phone || 'N/A'}</p>
                       </div>
                       <div>
                         <label className="text-xs text-gray-500 uppercase font-semibold">
@@ -272,6 +288,8 @@ export function Admin() {
                             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                           >
                             <option value="pending">Pending</option>
+                            <option value="demo_requested">Demo Requested</option>
+                            <option value="demo_ready">Demo Ready</option>
                             <option value="payment_received">Payment Received</option>
                             <option value="training">Training</option>
                             <option value="ready">Ready</option>

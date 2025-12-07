@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Bot, Menu, X, Shield } from 'lucide-react';
+import { Menu, X, Shield } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { AuthModal } from './AuthModal';
+import { Logo } from './Logo';
 
 interface HeaderProps {
   onGetStarted?: () => void;
@@ -32,10 +33,7 @@ export function Header({ onGetStarted, showAuthButtons = true, isAdminUser = fal
       <header className="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
         <nav className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
-            <Link to="/" className="flex items-center gap-2 hover:opacity-80 transition">
-              <Bot className="text-blue-600" size={32} />
-              <span className="text-2xl font-bold text-gray-900">Websitebot.com.au</span>
-            </Link>
+            <Logo />
 
             <div className="hidden md:flex items-center gap-8">
               <Link to="/" className="text-gray-700 hover:text-blue-600 font-medium transition">

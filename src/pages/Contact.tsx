@@ -60,8 +60,8 @@ export function Contact() {
                     </div>
                     <div>
                       <h3 className="font-semibold text-gray-900 mb-1">Email</h3>
-                      <a href="mailto:support@websitebot.com.au" className="text-gray-600 hover:text-blue-600 transition">
-                        support@websitebot.com.au
+                      <a href="mailto:support@dashbot.com.au" className="text-gray-600 hover:text-blue-600 transition">
+                        support@dashbot.com.au
                       </a>
                     </div>
                   </div>

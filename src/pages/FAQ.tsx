@@ -16,13 +16,13 @@ export function FAQ() {
   const faqs: FAQItem[] = [
     {
       category: 'Getting Started',
-      question: 'How does Websitebot.com.au work?',
+      question: 'How does DashBot work?',
       answer: 'Simply provide your website URL, and our AI will automatically crawl your site, extract content, and train a custom chatbot. You can then embed the chatbot on your website with a simple code snippet. The entire process takes just a few minutes.'
     },
     {
       category: 'Getting Started',
-      question: 'Do I need any technical knowledge to use Websitebot.com.au?',
-      answer: 'No! Websitebot.com.au is designed to be user-friendly and requires no coding skills. Our platform handles all the technical aspects automatically. You just need to paste your website URL and follow the simple setup process.'
+      question: 'Do I need any technical knowledge to use DashBot?',
+      answer: 'No! DashBot is designed to be user-friendly and requires no coding skills. Our platform handles all the technical aspects automatically. You just need to paste your website URL and follow the simple setup process.'
     },
     {
       category: 'Getting Started',
@@ -42,7 +42,7 @@ export function FAQ() {
     {
       category: 'Pricing',
       question: 'Are there any ongoing fees or subscriptions?',
-      answer: 'No. Websitebot.com.au uses a one-time payment model. Once you pay for your chatbot, it\'s yours to use indefinitely with no recurring charges.'
+      answer: 'No. DashBot uses a one-time payment model. Once you pay for your chatbot, it\'s yours to use indefinitely with no recurring charges.'
     },
     {
       category: 'Features',
@@ -66,8 +66,8 @@ export function FAQ() {
     },
     {
       category: 'Technical',
-      question: 'Which websites are compatible with Websitebot.com.au?',
-      answer: 'Websitebot.com.au works with any website platform including WordPress, Shopify, Wix, Squarespace, custom HTML sites, and more. As long as you can add a code snippet to your site, you can use our chatbot.'
+      question: 'Which websites are compatible with DashBot?',
+      answer: 'DashBot works with any website platform including WordPress, Shopify, Wix, Squarespace, custom HTML sites, and more. As long as you can add a code snippet to your site, you can use our chatbot.'
     },
     {
       category: 'Technical',
@@ -87,7 +87,7 @@ export function FAQ() {
     {
       category: 'Support',
       question: 'What kind of support do you offer?',
-      answer: 'We provide email support to all customers at support@websitebot.com.au. Our support team is based in Sydney, Australia and typically responds within 24 hours on business days. We also have comprehensive documentation and guides available.'
+      answer: 'We provide email support to all customers at support@dashbot.com.au. Our support team is based in Sydney, Australia and typically responds within 24 hours on business days. We also have comprehensive documentation and guides available.'
     },
     {
       category: 'Support',

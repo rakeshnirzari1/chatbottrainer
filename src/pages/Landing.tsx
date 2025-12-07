@@ -40,7 +40,7 @@ export function Landing() {
               <span className="text-blue-600"> AI Chatbot</span>
             </h1>
             <p className="text-xl md:text-2xl text-gray-600 mb-10 max-w-3xl mx-auto leading-relaxed">
-              Train a custom AI chatbot on your website content in minutes. Provide instant, accurate answers to your visitors without writing a single line of code. Based in Sydney, Australia.
+              Train a custom AI chatbot on your website content in minutes. Provide instant, accurate answers to your visitors without writing a single line of code. Teach Your Website to Talk. Based in Sydney, Australia.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <button
@@ -65,7 +65,7 @@ export function Landing() {
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-              Why Choose Websitebot.com.au?
+              Why Choose DashBot?
             </h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
               Everything you need to deliver exceptional customer support with AI technology
