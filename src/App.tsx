@@ -16,12 +16,26 @@ function ScrollToTop() {
   const { pathname } = useLocation();
 
   useEffect(() => {
+    // Use requestAnimationFrame to ensure the scroll happens after render
+    const scrollToTop = () => {
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: 'auto'
+      });
+    };
+
     // Scroll immediately
-    window.scrollTo(0, 0);
-    // Also scroll after a short delay to ensure DOM is rendered
-    const timer = setTimeout(() => {
-      window.scrollTo(0, 0);
-    }, 0);
+    scrollToTop();
+    
+    // Also schedule for after render completes
+    requestAnimationFrame(() => {
+      scrollToTop();
+    });
+
+    // And one more time with a tiny delay to catch any late renders
+    const timer = setTimeout(scrollToTop, 50);
+    
     return () => clearTimeout(timer);
   }, [pathname]);
 
