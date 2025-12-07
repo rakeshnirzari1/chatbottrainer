@@ -245,22 +245,22 @@ export function Landing() {
                 ].map((tier) => (
                   <div
                     key={tier.range}
-                    className={`flex items-center justify-between p-4 rounded-xl border-2 transition ${
+                    className={`flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 p-4 rounded-xl border-2 transition ${
                       tier.popular
                         ? 'border-blue-600 bg-blue-50'
                         : 'border-gray-200 bg-white hover:border-blue-300'
                     }`}
                   >
                     <div className="flex items-center gap-3">
-                      <CheckCircle className={tier.popular ? "text-blue-600" : "text-green-500"} size={24} />
+                      <CheckCircle className={tier.popular ? "text-blue-600 flex-shrink-0" : "text-green-500 flex-shrink-0"} size={24} />
                       <span className="text-lg font-semibold text-gray-900">{tier.range}</span>
                       {tier.popular && (
-                        <span className="px-3 py-1 bg-blue-600 text-white text-xs font-bold rounded-full">
+                        <span className="px-3 py-1 bg-blue-600 text-white text-xs font-bold rounded-full whitespace-nowrap">
                           MOST POPULAR
                         </span>
                       )}
                     </div>
-                    <span className="text-3xl font-bold text-gray-900">{tier.price}</span>
+                    <span className="text-2xl sm:text-3xl font-bold text-gray-900">{tier.price}</span>
                   </div>
                 ))}
               </div>
