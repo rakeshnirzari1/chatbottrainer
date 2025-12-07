@@ -1,4 +1,4 @@
-import { Shield } from 'lucide-react';
+import { Shield, Mail, MapPin } from 'lucide-react';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
 
@@ -147,12 +147,32 @@ export function Privacy() {
                 <p className="text-gray-700 mb-2">
                   <strong>Email:</strong> support@dashbot.com.au
                 </p>
-                <p className="text-gray-700 mb-2">
-                  <strong>Address:</strong> 123 AI Street, Tech City, TC 12345
-                </p>
-                <p className="text-gray-700">
-                  <strong>Phone:</strong> +1 (555) 123-4567
-                </p>
+                <div className="space-y-6 mt-6">
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <Mail className="text-green-600" size={24} />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-gray-900 mb-1">Email</h4>
+                      <a href="mailto:support@dashbot.com.au" className="text-gray-600 hover:text-green-600 transition">
+                        support@dashbot.com.au
+                      </a>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <MapPin className="text-blue-600" size={24} />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-gray-900 mb-1">Location</h4>
+                      <p className="text-gray-600">
+                        Sydney, NSW<br />
+                        Australia
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </div>
 
               <div className="bg-green-50 border border-green-200 rounded-xl p-6 mt-8">
