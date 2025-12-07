@@ -404,16 +404,16 @@ export function Onboarding() {
           </div>
 
           <div className="grid lg:grid-cols-3 gap-6 sm:gap-8">
-            <div className="lg:col-span-2">
-              <div className="bg-white p-4 sm:p-6 rounded-2xl shadow-lg border border-gray-100">
-                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-4">
+            <div className="lg:col-span-2 min-w-0">
+              <div className="bg-white p-4 sm:p-6 rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+                <div className="flex flex-col gap-4 mb-6">
                   <div className="text-2xl font-bold text-gray-900">
                     {allUrls.length} URLs Total
                   </div>
-                  <div className="flex gap-2 w-full sm:w-auto">
+                  <div className="flex flex-col xs:flex-row gap-2 w-full">
                     <button
                       onClick={() => setShowManualInput(!showManualInput)}
-                      className="flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition flex-1 sm:flex-none"
+                      className="flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition flex-1 text-sm sm:text-base"
                     >
                       <Plus size={18} />
                       <span className="hidden sm:inline">Add URL</span>
@@ -421,7 +421,7 @@ export function Onboarding() {
                     </button>
                     <button
                       onClick={handleToggleAll}
-                      className="px-4 py-2 border border-gray-300 rounded-lg font-medium hover:bg-gray-50 transition flex-1 sm:flex-none"
+                      className="px-4 py-2 border border-gray-300 rounded-lg font-medium hover:bg-gray-50 transition flex-1 text-sm sm:text-base"
                     >
                       {selectedUrls.size === allUrls.length ? 'Deselect All' : 'Select All'}
                     </button>
@@ -468,18 +468,18 @@ export function Onboarding() {
                   {allUrls.map((url) => (
                     <div
                       key={url}
-                      className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition"
+                      className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition min-w-0"
                     >
                       <input
                         type="checkbox"
                         checked={selectedUrls.has(url)}
                         onChange={() => handleToggleUrl(url)}
-                        className="w-4 h-4 text-blue-600 rounded focus:ring-2 focus:ring-blue-500 cursor-pointer"
+                        className="w-4 h-4 text-blue-600 rounded focus:ring-2 focus:ring-blue-500 cursor-pointer flex-shrink-0"
                       />
-                      <span className="text-sm text-gray-700 truncate flex-1">{url}</span>
+                      <span className="text-xs sm:text-sm text-gray-700 truncate flex-1 break-words">{url}</span>
                       <button
                         onClick={() => handleRemoveUrl(url)}
-                        className="text-red-500 hover:text-red-700 transition p-1"
+                        className="text-red-500 hover:text-red-700 transition p-1 flex-shrink-0"
                         title="Remove URL"
                       >
                         <X size={16} />
@@ -490,15 +490,15 @@ export function Onboarding() {
               </div>
             </div>
 
-            <div className="lg:col-span-1">
-              <div className="bg-white p-4 sm:p-6 rounded-2xl shadow-lg border border-gray-100 lg:sticky lg:top-6">
+            <div className="lg:col-span-1 min-w-0">
+              <div className="bg-white p-4 sm:p-6 rounded-2xl shadow-lg border border-gray-100 lg:sticky lg:top-6 overflow-hidden">
                 <div className="flex items-center gap-2 mb-6">
-                  <DollarSign className="text-blue-600" size={24} />
+                  <DollarSign className="text-blue-600 flex-shrink-0" size={24} />
                   <h3 className="text-xl font-bold text-gray-900">Pricing</h3>
                 </div>
 
                 <div className="mb-6">
-                  <div className="text-gray-600 mb-2">Selected URLs</div>
+                  <div className="text-gray-600 mb-2 text-sm">Selected URLs</div>
                   <div className="text-4xl font-bold text-gray-900">{selectedUrls.size}</div>
                 </div>
 
@@ -514,7 +514,7 @@ export function Onboarding() {
 
                 {!canProceed && (
                   <div className="mb-4 p-3 bg-orange-50 border border-orange-200 rounded-lg">
-                    <p className="text-sm text-orange-800">
+                    <p className="text-xs sm:text-sm text-orange-800">
                       Please select up to 1000 URLs or contact us for custom pricing
                     </p>
                   </div>
@@ -523,7 +523,7 @@ export function Onboarding() {
                 <button
                   onClick={handleProceedToPayment}
                   disabled={selectedUrls.size === 0 || !canProceed}
-                  className="w-full bg-blue-600 text-white py-3 rounded-lg font-bold hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full bg-blue-600 text-white py-3 rounded-lg font-bold text-sm sm:text-base hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   Get Free Demo Chatbot
                 </button>
