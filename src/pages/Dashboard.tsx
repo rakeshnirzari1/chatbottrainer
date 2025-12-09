@@ -271,10 +271,10 @@ export function Dashboard() {
                               {order.status === 'demo_ready' ? 'Demo Chatbot Preview' : 'Your Chatbot'}
                             </label>
                           </div>
-                          <div className="bg-white rounded-lg border border-cyan-300 overflow-hidden -mx-4 sm:mx-0">
+                          <div className="bg-white rounded-lg border border-cyan-300 overflow-x-auto">
                             <iframe
-                              srcDoc={`<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"></head><body style="margin: 0; padding: 0; overflow-x: hidden;">${order.embed_code}</body></html>`}
-                              className="w-screen sm:w-full h-[500px] sm:h-[700px] border-0"
+                              srcDoc={`<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><style>body { margin: 0; padding: 0; min-height: 100vh; }</style></head><body>${order.embed_code}</body></html>`}
+                              className="w-full h-[500px] sm:h-[700px] border-0 block"
                               title="Chatbot Preview"
                               sandbox="allow-scripts allow-same-origin"
                             />
