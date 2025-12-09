@@ -7,7 +7,8 @@ import { Header } from '../components/Header';
 import { Logo } from '../components/Logo';
 import { crawlWebsite, CrawlProgress } from '../lib/crawler';
 import { calculatePrice, formatPrice } from '../lib/pricing';
-import { saveOnboardingState, loadOnboardingState } from '../lib/storage';
+import { saveOnboardingState, loadOnboardingState, clearOnboardingState } from '../lib/storage';
+import { supabase } from '../lib/supabase';
 
 type Step = 'input' | 'crawling' | 'selection';
 
@@ -25,6 +26,7 @@ export function Onboarding() {
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [manualUrl, setManualUrl] = useState('');
   const [showManualInput, setShowManualInput] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const logEndRef = useRef<HTMLDivElement>(null);
   const urlsEndRef = useRef<HTMLDivElement>(null);
 
@@ -181,7 +183,7 @@ export function Onboarding() {
     setSelectedUrls(newSelected);
   };
 
-  const handleProceedToPayment = () => {
+  const handleRequestDemo = async () => {
     if (selectedUrls.size === 0) {
       alert('Please select at least one URL');
       return;
@@ -198,14 +200,29 @@ export function Onboarding() {
       return;
     }
 
-    navigate('/checkout', {
-      state: {
-        websiteUrl,
-        selectedUrls: Array.from(selectedUrls),
-        totalUrls: selectedUrls.size,
-        price
-      }
-    });
+    setIsSubmitting(true);
+
+    try {
+      const { error } = await supabase
+        .from('orders')
+        .insert({
+          user_id: user.id,
+          website_url: websiteUrl,
+          selected_urls: Array.from(selectedUrls),
+          total_urls: selectedUrls.size,
+          final_price_cents: price,
+          status: 'demo_requested',
+        });
+
+      if (error) throw error;
+
+      clearOnboardingState();
+      navigate('/dashboard');
+    } catch (error) {
+      console.error('Error creating demo request:', error);
+      alert('Failed to create demo request. Please try again.');
+      setIsSubmitting(false);
+    }
   };
 
   const price = calculatePrice(selectedUrls.size);
@@ -500,11 +517,18 @@ export function Onboarding() {
                 )}
 
                 <button
-                  onClick={handleProceedToPayment}
-                  disabled={selectedUrls.size === 0 || !canProceed}
-                  className="w-full bg-blue-600 text-white py-3 rounded-lg font-bold text-sm sm:text-base hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                  onClick={handleRequestDemo}
+                  disabled={selectedUrls.size === 0 || !canProceed || isSubmitting}
+                  className="w-full bg-blue-600 text-white py-3 rounded-lg font-bold text-sm sm:text-base hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                 >
-                  Get Free Demo Chatbot
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="animate-spin" size={18} />
+                      Submitting...
+                    </>
+                  ) : (
+                    'Request Free Demo'
+                  )}
                 </button>
 
                 <div className="mt-6 pt-6 border-t border-gray-200 text-xs text-gray-500 space-y-1">
