@@ -1,59 +1,57 @@
-import { supabase } from './supabase';
+import { supabase } from './supabase'
 
-export interface CheckoutSessionData {
-  websiteUrl: string;
-  selectedUrls: string[];
-  totalUrls: number;
-  price: number;
-  customerName: string;
-  customerPhone: string;
+export interface CheckoutSessionRequest {
+  price_id: string
+  success_url: string
+  cancel_url: string
+  mode: 'payment' | 'subscription'
 }
 
-export async function createCheckoutSession(data: CheckoutSessionData): Promise<{ sessionUrl: string; orderId: string }> {
-  const { data: { session } } = await supabase.auth.getSession();
+export interface CheckoutSessionResponse {
+  sessionId: string
+  url: string
+}
 
-  if (!session) {
-    throw new Error('You must be logged in to proceed with checkout');
+export const createCheckoutSession = async (request: CheckoutSessionRequest): Promise<CheckoutSessionResponse> => {
+  const { data: { session } } = await supabase.auth.getSession()
+  
+  if (!session?.access_token) {
+    throw new Error('User not authenticated')
   }
 
-  const response = await fetch(
-    `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/create-checkout-session`,
-    {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${session.access_token}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    }
-  );
+  const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/stripe-checkout`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${session.access_token}`
+    },
+    body: JSON.stringify(request)
+  })
 
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.error || 'Failed to create checkout session');
+    const error = await response.json()
+    throw new Error(error.error || 'Failed to create checkout session')
   }
 
-  return await response.json();
+  return response.json()
 }
 
-export async function updateOrderStatus(orderId: string, status: string, stripeSessionId?: string) {
-  const updateData: any = { status };
+export const getUserSubscription = async () => {
+  const { data, error } = await supabase
+    .from('stripe_user_subscriptions')
+    .select('*')
+    .maybeSingle()
 
-  if (stripeSessionId) {
-    updateData.stripe_session_id = stripeSessionId;
-  }
+  if (error) throw error
+  return data
+}
 
-  if (status === 'paid') {
-    updateData.paid_at = new Date().toISOString();
-  }
+export const getUserOrders = async () => {
+  const { data, error } = await supabase
+    .from('stripe_user_orders')
+    .select('*')
+    .order('order_date', { ascending: false })
 
-  const { error } = await supabase
-    .from('orders')
-    .update(updateData)
-    .eq('id', orderId);
-
-  if (error) {
-    console.error('Failed to update order status:', error);
-    throw error;
-  }
+  if (error) throw error
+  return data
 }
