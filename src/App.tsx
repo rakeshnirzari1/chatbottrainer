@@ -4,6 +4,7 @@ import { AuthProvider } from './contexts/AuthContext';
 import { Landing } from './pages/Landing';
 import { Onboarding } from './pages/Onboarding';
 import { Checkout } from './pages/Checkout';
+import { PaymentSuccess } from './pages/PaymentSuccess';
 import { Dashboard } from './pages/Dashboard';
 import { Admin } from './pages/Admin';
 import { About } from './pages/About';
@@ -65,6 +66,7 @@ function AppContent() {
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/onboarding" element={<Onboarding />} />
           <Route path="/checkout" element={<Checkout />} />
+          <Route path="/payment-success" element={<PaymentSuccess />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/admin" element={<Admin />} />
         </Routes>

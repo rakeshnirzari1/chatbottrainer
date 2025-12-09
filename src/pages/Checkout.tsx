@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Loader2, CheckCircle, Sparkles } from 'lucide-react';
+import { Loader2, Sparkles, ShoppingCart } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
-import { supabase } from '../lib/supabase';
+import { createCheckoutSession } from '../lib/stripe';
 import { clearOnboardingState } from '../lib/storage';
 import { Logo } from '../components/Logo';
 
@@ -52,31 +52,21 @@ export function Checkout() {
     setSubmitting(true);
 
     try {
-      const { data: order, error } = await supabase
-        .from('orders')
-        .insert({
-          user_id: user.id,
-          website_url: state.websiteUrl,
-          selected_urls: state.selectedUrls,
-          total_urls: state.totalUrls,
-          final_price_cents: state.price,
-          customer_name: formData.name,
-          customer_phone: formData.phone,
-          status: 'demo_requested'
-        })
-        .select()
-        .single();
-
-      if (error) throw error;
+      const { sessionUrl } = await createCheckoutSession({
+        websiteUrl: state.websiteUrl,
+        selectedUrls: state.selectedUrls,
+        totalUrls: state.totalUrls,
+        price: state.price,
+        customerName: formData.name,
+        customerPhone: formData.phone,
+      });
 
       clearOnboardingState();
 
-      setTimeout(() => {
-        navigate('/dashboard');
-      }, 2500);
+      window.location.href = sessionUrl;
     } catch (error) {
-      console.error('Error creating demo request:', error);
-      alert('Failed to submit demo request. Please try again.');
+      console.error('Error creating checkout session:', error);
+      alert('Failed to create checkout session. Please try again.');
       setLoading(false);
       setSubmitting(false);
     }
@@ -93,11 +83,10 @@ export function Checkout() {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-slate-50 flex items-center justify-center p-4">
         <div className="text-center max-w-md">
-          <CheckCircle className="w-16 h-16 md:w-20 md:h-20 text-green-500 mx-auto mb-4 animate-in zoom-in" />
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Demo Request Submitted!</h2>
+          <Loader2 className="w-16 h-16 md:w-20 md:h-20 text-blue-600 mx-auto mb-4 animate-spin" />
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Redirecting to Payment...</h2>
           <p className="text-gray-600 text-sm md:text-base">
-            We'll train an AI chatbot on your website and provide you with a demo to test.
-            You'll be able to try it out in your dashboard before making any payment.
+            Please wait while we securely redirect you to Stripe checkout.
           </p>
         </div>
       </div>
@@ -114,14 +103,14 @@ export function Checkout() {
         <div className="max-w-2xl mx-auto">
           <div className="text-center mb-8 md:mb-12">
             <div className="inline-flex items-center gap-2 mb-4 px-4 py-2 bg-blue-100 text-blue-700 rounded-full text-sm font-semibold">
-              <Sparkles size={16} />
-              Free Demo Chatbot
+              <ShoppingCart size={16} />
+              Secure Checkout
             </div>
             <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
-              Get Your Demo Chatbot
+              Complete Your Purchase
             </h1>
             <p className="text-gray-600 text-sm md:text-base">
-              We'll train a demo chatbot on your website so you can test it before purchasing
+              Review your order details and proceed to secure payment
             </p>
           </div>
 
@@ -189,26 +178,14 @@ export function Checkout() {
                 />
               </div>
 
-              <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
-                <h3 className="font-semibold text-gray-900 mb-2 text-sm md:text-base">What happens next?</h3>
-                <ul className="space-y-2 text-xs md:text-sm text-gray-600">
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="text-blue-600 flex-shrink-0 mt-0.5" size={16} />
-                    <span>We'll train an AI chatbot on your selected pages</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="text-blue-600 flex-shrink-0 mt-0.5" size={16} />
-                    <span>You'll get access to a demo chatbot in your dashboard</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="text-blue-600 flex-shrink-0 mt-0.5" size={16} />
-                    <span>Test it thoroughly before deciding to purchase</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="text-blue-600 flex-shrink-0 mt-0.5" size={16} />
-                    <span>No payment required until you're satisfied</span>
-                  </li>
-                </ul>
+              <div className="p-4 bg-green-50 rounded-lg border border-green-200">
+                <h3 className="font-semibold text-gray-900 mb-2 text-sm md:text-base">Secure Payment</h3>
+                <p className="text-xs md:text-sm text-gray-600 mb-2">
+                  Your payment is processed securely through Stripe. We never store your credit card information.
+                </p>
+                <p className="text-xs md:text-sm text-gray-600">
+                  After payment, we'll train your AI chatbot and you'll get instant access in your dashboard.
+                </p>
               </div>
 
               <button
@@ -219,18 +196,18 @@ export function Checkout() {
                 {loading ? (
                   <>
                     <Loader2 className="animate-spin" size={20} />
-                    Submitting...
+                    Processing...
                   </>
                 ) : (
                   <>
-                    <Sparkles size={20} />
-                    Request Free Demo
+                    <ShoppingCart size={20} />
+                    Proceed to Payment
                   </>
                 )}
               </button>
 
               <p className="text-center text-xs text-gray-500">
-                By requesting a demo, you agree to our terms of service
+                By proceeding, you agree to our terms of service
               </p>
             </form>
           </div>
