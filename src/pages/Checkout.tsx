@@ -11,6 +11,7 @@ interface CheckoutState {
   selectedUrls: string[];
   totalUrls: number;
   price: number;
+  existingOrderId?: string;
 }
 
 export function Checkout() {
@@ -59,9 +60,12 @@ export function Checkout() {
         price: state.price,
         customerName: formData.name,
         customerPhone: formData.phone,
+        existingOrderId: state.existingOrderId
       });
 
-      clearOnboardingState();
+      if (!state.existingOrderId) {
+        clearOnboardingState();
+      }
 
       window.location.href = sessionUrl;
     } catch (error) {

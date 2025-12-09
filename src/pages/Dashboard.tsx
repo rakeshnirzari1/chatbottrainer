@@ -70,6 +70,18 @@ export function Dashboard() {
     navigate('/');
   };
 
+  const handlePayment = (order: Order) => {
+    navigate('/checkout', {
+      state: {
+        websiteUrl: order.website_url,
+        selectedUrls: order.selected_urls,
+        totalUrls: order.total_urls,
+        price: order.final_price_cents,
+        existingOrderId: order.id
+      }
+    });
+  };
+
   const getStatusInfo = (status: Order['status']) => {
     switch (status) {
       case 'pending':
@@ -294,7 +306,7 @@ export function Dashboard() {
                                 </p>
                               </div>
                               <button
-                                onClick={() => alert('Payment integration coming soon!')}
+                                onClick={() => handlePayment(order)}
                                 className="flex items-center gap-2 px-4 sm:px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition whitespace-nowrap w-full sm:w-auto justify-center sm:justify-start"
                               >
                                 <CreditCard size={18} />

@@ -14,6 +14,7 @@ interface CheckoutRequest {
   price: number;
   customerName: string;
   customerPhone: string;
+  existingOrderId?: string;
 }
 
 function getPriceId(urlCount: number): string | null {
@@ -78,7 +79,7 @@ Deno.serve(async (req: Request) => {
     }
 
     const requestData: CheckoutRequest = await req.json();
-    const { websiteUrl, selectedUrls, totalUrls, price, customerName, customerPhone } = requestData;
+    const { websiteUrl, selectedUrls, totalUrls, price, customerName, customerPhone, existingOrderId } = requestData;
 
     const priceId = getPriceId(totalUrls);
     if (!priceId) {
@@ -91,23 +92,45 @@ Deno.serve(async (req: Request) => {
       );
     }
 
-    const { data: order, error: orderError } = await supabase
-      .from('orders')
-      .insert({
-        user_id: user.id,
-        website_url: websiteUrl,
-        selected_urls: selectedUrls,
-        total_urls: totalUrls,
-        final_price_cents: price,
-        customer_name: customerName,
-        customer_phone: customerPhone,
-        status: 'pending_payment',
-      })
-      .select()
-      .single();
+    let order;
 
-    if (orderError) {
-      throw orderError;
+    if (existingOrderId) {
+      const { data: updatedOrder, error: updateError } = await supabase
+        .from('orders')
+        .update({
+          customer_name: customerName,
+          customer_phone: customerPhone,
+          status: 'pending_payment',
+        })
+        .eq('id', existingOrderId)
+        .eq('user_id', user.id)
+        .select()
+        .single();
+
+      if (updateError) {
+        throw updateError;
+      }
+      order = updatedOrder;
+    } else {
+      const { data: newOrder, error: orderError } = await supabase
+        .from('orders')
+        .insert({
+          user_id: user.id,
+          website_url: websiteUrl,
+          selected_urls: selectedUrls,
+          total_urls: totalUrls,
+          final_price_cents: price,
+          customer_name: customerName,
+          customer_phone: customerPhone,
+          status: 'pending_payment',
+        })
+        .select()
+        .single();
+
+      if (orderError) {
+        throw orderError;
+      }
+      order = newOrder;
     }
 
     const origin = req.headers.get('origin') || 'http://localhost:5173';

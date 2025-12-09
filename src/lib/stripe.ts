@@ -7,6 +7,7 @@ export interface CheckoutSessionData {
   price: number;
   customerName: string;
   customerPhone: string;
+  existingOrderId?: string;
 }
 
 export async function createCheckoutSession(data: CheckoutSessionData): Promise<{ sessionUrl: string; orderId: string }> {
