@@ -18,7 +18,7 @@ export function PaymentSuccess() {
       return;
     }
 
-    updateOrderStatus(orderId, 'paid', sessionId)
+    updateOrderStatus(orderId, 'ready', sessionId)
       .then(() => {
         setStatus('success');
       })

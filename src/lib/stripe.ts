@@ -44,7 +44,7 @@ export async function updateOrderStatus(orderId: string, status: string, stripeS
     updateData.stripe_session_id = stripeSessionId;
   }
 
-  if (status === 'paid') {
+  if (status === 'ready' || status === 'payment_received') {
     updateData.paid_at = new Date().toISOString();
   }
 

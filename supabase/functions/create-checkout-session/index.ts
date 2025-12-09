@@ -95,22 +95,30 @@ Deno.serve(async (req: Request) => {
     let order;
 
     if (existingOrderId) {
-      const { data: updatedOrder, error: updateError } = await supabase
+      const { data: existingOrder, error: fetchError } = await supabase
+        .from('orders')
+        .select()
+        .eq('id', existingOrderId)
+        .eq('user_id', user.id)
+        .single();
+
+      if (fetchError) {
+        throw fetchError;
+      }
+
+      const { error: updateError } = await supabase
         .from('orders')
         .update({
           customer_name: customerName,
           customer_phone: customerPhone,
-          status: 'pending_payment',
         })
         .eq('id', existingOrderId)
-        .eq('user_id', user.id)
-        .select()
-        .single();
+        .eq('user_id', user.id);
 
       if (updateError) {
         throw updateError;
       }
-      order = updatedOrder;
+      order = existingOrder;
     } else {
       const { data: newOrder, error: orderError } = await supabase
         .from('orders')
@@ -122,7 +130,7 @@ Deno.serve(async (req: Request) => {
           final_price_cents: price,
           customer_name: customerName,
           customer_phone: customerPhone,
-          status: 'pending_payment',
+          status: 'pending',
         })
         .select()
         .single();

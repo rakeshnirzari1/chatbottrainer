@@ -274,14 +274,12 @@ export function Dashboard() {
                       </div>
                     )}
 
-                    {(order.status === 'demo_ready' || order.status === 'ready') && order.embed_code && (
+                    {order.status === 'demo_ready' && order.embed_code && (
                       <div className="mt-4 space-y-4">
                         <div className="p-4 bg-cyan-50 border border-cyan-200 rounded-lg">
                           <div className="flex items-center gap-2 mb-3">
                             <Rocket className="text-cyan-600" size={18} />
-                            <label className="font-semibold text-cyan-900">
-                              {order.status === 'demo_ready' ? 'Demo Chatbot Preview' : 'Your Chatbot'}
-                            </label>
+                            <label className="font-semibold text-cyan-900">Demo Chatbot Preview</label>
                           </div>
                           <div className="bg-white rounded-lg border border-cyan-300 overflow-x-auto">
                             <iframe
@@ -296,64 +294,82 @@ export function Dashboard() {
                           </p>
                         </div>
 
-                        {order.status === 'demo_ready' && (
-                          <div className="p-4 bg-gradient-to-r from-blue-50 to-cyan-50 border border-blue-200 rounded-lg">
-                            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                              <div>
-                                <p className="font-semibold text-gray-900 mb-1">Ready to go live?</p>
-                                <p className="text-sm text-gray-600">
-                                  Complete payment to receive the embed code and deploy to your website
-                                </p>
-                              </div>
-                              <button
-                                onClick={() => handlePayment(order)}
-                                className="flex items-center gap-2 px-4 sm:px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition whitespace-nowrap w-full sm:w-auto justify-center sm:justify-start"
-                              >
-                                <CreditCard size={18} />
-                                Pay {formatPrice(order.final_price_cents)}
-                              </button>
+                        <div className="p-4 bg-gradient-to-r from-blue-50 to-cyan-50 border border-blue-200 rounded-lg">
+                          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                            <div>
+                              <p className="font-semibold text-gray-900 mb-1">Ready to go live?</p>
+                              <p className="text-sm text-gray-600">
+                                Complete payment to receive the embed code and deploy to your website
+                              </p>
                             </div>
+                            <button
+                              onClick={() => handlePayment(order)}
+                              className="flex items-center gap-2 px-4 sm:px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition whitespace-nowrap w-full sm:w-auto justify-center sm:justify-start"
+                            >
+                              <CreditCard size={18} />
+                              Pay {formatPrice(order.final_price_cents)}
+                            </button>
                           </div>
-                        )}
+                        </div>
+                      </div>
+                    )}
 
-                        {order.status === 'ready' && (
-                          <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
-                            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
-                              <label className="font-semibold text-green-900 flex items-center gap-2">
-                                <CheckCircle className="text-green-600" size={18} />
-                                Your Chatbot is Ready!
-                              </label>
-                              <button
-                                onClick={() => handleCopyEmbed(order.id, order.embed_code!)}
-                                className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg text-sm font-semibold hover:bg-green-700 transition w-full sm:w-auto justify-center sm:justify-start"
-                              >
-                                {copiedId === order.id ? (
-                                  <>
-                                    <CheckCircle size={16} />
-                                    Copied!
-                                  </>
-                                ) : (
-                                  <>
-                                    <Copy size={16} />
-                                    Copy Embed Code
-                                  </>
-                                )}
-                              </button>
-                            </div>
-                            <pre className="bg-white p-4 rounded border border-green-300 text-xs overflow-x-auto font-mono">
-                              <code>{order.embed_code}</code>
-                            </pre>
-                            <div className="mt-4 p-3 bg-white rounded border border-green-200">
-                              <p className="font-semibold text-gray-900 mb-2 text-sm">How to add to your website:</p>
-                              <ol className="list-decimal list-inside space-y-2 text-sm text-gray-700">
-                                <li>Copy the embed code above using the button</li>
-                                <li>Open your website's HTML file</li>
-                                <li>Paste the code just before the closing <code className="bg-gray-100 px-1 rounded">&lt;/body&gt;</code> tag</li>
-                                <li>Save and publish - your chatbot will appear automatically!</li>
-                              </ol>
-                            </div>
+                    {order.status === 'ready' && order.embed_code && (
+                      <div className="mt-4 space-y-4">
+                        <div className="p-4 bg-cyan-50 border border-cyan-200 rounded-lg">
+                          <div className="flex items-center gap-2 mb-3">
+                            <Rocket className="text-cyan-600" size={18} />
+                            <label className="font-semibold text-cyan-900">Your Chatbot</label>
                           </div>
-                        )}
+                          <div className="bg-white rounded-lg border border-cyan-300 overflow-x-auto">
+                            <iframe
+                              srcDoc={`<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><style>body { margin: 0; padding: 0; min-height: 100vh; }</style></head><body>${order.embed_code}</body></html>`}
+                              className="w-full h-[500px] sm:h-[700px] border-0 block"
+                              title="Chatbot Preview"
+                              sandbox="allow-scripts allow-same-origin"
+                            />
+                          </div>
+                          <p className="text-sm text-cyan-700 mt-2">
+                            Your live chatbot is ready to deploy!
+                          </p>
+                        </div>
+
+                        <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
+                          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
+                            <label className="font-semibold text-green-900 flex items-center gap-2">
+                              <CheckCircle className="text-green-600" size={18} />
+                              Your Chatbot is Ready!
+                            </label>
+                            <button
+                              onClick={() => handleCopyEmbed(order.id, order.embed_code!)}
+                              className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg text-sm font-semibold hover:bg-green-700 transition w-full sm:w-auto justify-center sm:justify-start"
+                            >
+                              {copiedId === order.id ? (
+                                <>
+                                  <CheckCircle size={16} />
+                                  Copied!
+                                </>
+                              ) : (
+                                <>
+                                  <Copy size={16} />
+                                  Copy Embed Code
+                                </>
+                              )}
+                            </button>
+                          </div>
+                          <pre className="bg-white p-4 rounded border border-green-300 text-xs overflow-x-auto font-mono">
+                            <code>{order.embed_code}</code>
+                          </pre>
+                          <div className="mt-4 p-3 bg-white rounded border border-green-200">
+                            <p className="font-semibold text-gray-900 mb-2 text-sm">How to add to your website:</p>
+                            <ol className="list-decimal list-inside space-y-2 text-sm text-gray-700">
+                              <li>Copy the embed code above using the button</li>
+                              <li>Open your website's HTML file</li>
+                              <li>Paste the code just before the closing <code className="bg-gray-100 px-1 rounded">&lt;/body&gt;</code> tag</li>
+                              <li>Save and publish - your chatbot will appear automatically!</li>
+                            </ol>
+                          </div>
+                        </div>
                       </div>
                     )}
 
