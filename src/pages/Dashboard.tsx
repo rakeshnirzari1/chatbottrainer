@@ -274,7 +274,7 @@ export function Dashboard() {
                           <div className="bg-white rounded-lg border border-cyan-300 overflow-x-auto">
                             <iframe
                               srcDoc={`<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><style>body { margin: 0; padding: 0; min-height: 100vh; }</style></head><body>${order.embed_code}</body></html>`}
-                              className="w-full h-[600px] sm:h-[700px] border-0 block"
+                              className="w-full h-[500px] sm:h-[700px] border-0 block"
                               title="Chatbot Preview"
                               sandbox="allow-scripts allow-same-origin"
                             />
