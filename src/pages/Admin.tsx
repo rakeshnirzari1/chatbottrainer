@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Bot, LogOut, Loader2, Save, FileText, StickyNote, Download, ChevronDown, ChevronUp } from 'lucide-react';
+import { Bot, LogOut, Loader2, Save, FileText, StickyNote, Download, ChevronDown, ChevronUp, Plus, Trash2, ExternalLink, Copy } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { isAdmin, getAllOrders, updateOrder, Order } from '../lib/admin';
 import { formatPrice } from '../lib/pricing';
+import { supabase } from '../lib/supabase';
 
 interface EditingOrder {
   id: string;
@@ -11,6 +12,15 @@ interface EditingOrder {
   embedCode: string;
   adminInstructions: string;
   adminNotes: string;
+}
+
+interface DemoPage {
+  id: string;
+  company_name: string;
+  slug: string;
+  embed_code: string;
+  created_at: string;
+  updated_at: string;
 }
 
 export function Admin() {
@@ -21,6 +31,11 @@ export function Admin() {
   const [updating, setUpdating] = useState<string | null>(null);
   const [editingOrder, setEditingOrder] = useState<EditingOrder | null>(null);
   const [expandedUrls, setExpandedUrls] = useState<Set<string>>(new Set());
+  const [demoPages, setDemoPages] = useState<DemoPage[]>([]);
+  const [showDemoForm, setShowDemoForm] = useState(false);
+  const [newDemo, setNewDemo] = useState({ companyName: '', embedCode: '' });
+  const [creatingDemo, setCreatingDemo] = useState(false);
+  const [copiedSlug, setCopiedSlug] = useState<string | null>(null);
 
   useEffect(() => {
     checkAdminAndLoadOrders();
@@ -39,6 +54,7 @@ export function Admin() {
     }
 
     loadAllOrders();
+    loadDemoPages();
   };
 
   const loadAllOrders = async () => {
@@ -50,6 +66,87 @@ export function Admin() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const loadDemoPages = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('demo_pages')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      setDemoPages(data || []);
+    } catch (error) {
+      console.error('Error loading demo pages:', error);
+    }
+  };
+
+  const createSlug = (companyName: string): string => {
+    return companyName
+      .toLowerCase()
+      .replace(/[^a-z0-9\s-]/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-')
+      .trim() + '-demo';
+  };
+
+  const handleCreateDemo = async () => {
+    if (!newDemo.companyName.trim() || !newDemo.embedCode.trim()) {
+      alert('Please fill in both company name and embed code');
+      return;
+    }
+
+    setCreatingDemo(true);
+    try {
+      const slug = createSlug(newDemo.companyName);
+
+      const { error } = await supabase
+        .from('demo_pages')
+        .insert([{
+          company_name: newDemo.companyName.trim(),
+          slug,
+          embed_code: newDemo.embedCode.trim()
+        }]);
+
+      if (error) throw error;
+
+      setNewDemo({ companyName: '', embedCode: '' });
+      setShowDemoForm(false);
+      await loadDemoPages();
+      alert(`Demo page created! URL: https://dashbot.com.au/${slug}`);
+    } catch (error) {
+      console.error('Error creating demo page:', error);
+      alert('Failed to create demo page. Please try again.');
+    } finally {
+      setCreatingDemo(false);
+    }
+  };
+
+  const handleDeleteDemo = async (id: string, slug: string) => {
+    if (!confirm(`Are you sure you want to delete the demo page for "${slug}"?`)) {
+      return;
+    }
+
+    try {
+      const { error } = await supabase
+        .from('demo_pages')
+        .delete()
+        .eq('id', id);
+
+      if (error) throw error;
+      await loadDemoPages();
+    } catch (error) {
+      console.error('Error deleting demo page:', error);
+      alert('Failed to delete demo page');
+    }
+  };
+
+  const copyToClipboard = (slug: string) => {
+    const url = `https://dashbot.com.au/${slug}`;
+    navigator.clipboard.writeText(url);
+    setCopiedSlug(slug);
+    setTimeout(() => setCopiedSlug(null), 2000);
   };
 
   const handleUpdateOrder = async () => {
@@ -152,6 +249,134 @@ export function Admin() {
 
       <div className="container mx-auto px-6 py-12">
         <div className="max-w-7xl mx-auto">
+          <div className="mb-12">
+            <div className="flex items-center justify-between mb-6">
+              <h1 className="text-4xl font-bold text-gray-900">Demo Pages</h1>
+              <button
+                onClick={() => setShowDemoForm(!showDemoForm)}
+                className="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition"
+              >
+                <Plus size={20} />
+                Create Demo Page
+              </button>
+            </div>
+
+            {showDemoForm && (
+              <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 mb-6">
+                <h2 className="text-xl font-bold text-gray-900 mb-4">Create New Demo Page</h2>
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      Company Name
+                    </label>
+                    <input
+                      type="text"
+                      value={newDemo.companyName}
+                      onChange={(e) => setNewDemo({ ...newDemo, companyName: e.target.value })}
+                      placeholder="e.g., Richmond High School"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    />
+                    {newDemo.companyName && (
+                      <p className="mt-2 text-sm text-gray-600">
+                        URL will be: <span className="font-mono font-semibold text-blue-600">
+                          https://dashbot.com.au/{createSlug(newDemo.companyName)}
+                        </span>
+                      </p>
+                    )}
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      Embed Code
+                    </label>
+                    <textarea
+                      value={newDemo.embedCode}
+                      onChange={(e) => setNewDemo({ ...newDemo, embedCode: e.target.value })}
+                      placeholder='<script src="..." data-bot="..."></script>'
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent font-mono text-sm"
+                      rows={4}
+                    />
+                  </div>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={handleCreateDemo}
+                      disabled={creatingDemo}
+                      className="px-6 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                    >
+                      {creatingDemo ? (
+                        <>
+                          <Loader2 className="animate-spin" size={18} />
+                          Creating...
+                        </>
+                      ) : (
+                        <>
+                          <Plus size={18} />
+                          Create Demo Page
+                        </>
+                      )}
+                    </button>
+                    <button
+                      onClick={() => {
+                        setShowDemoForm(false);
+                        setNewDemo({ companyName: '', embedCode: '' });
+                      }}
+                      className="px-6 py-2 border border-gray-300 rounded-lg font-semibold hover:bg-gray-50 transition"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {demoPages.length > 0 ? (
+              <div className="grid md:grid-cols-2 gap-4 mb-6">
+                {demoPages.map((demo) => (
+                  <div
+                    key={demo.id}
+                    className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition"
+                  >
+                    <div className="flex items-start justify-between mb-3">
+                      <div className="flex-1">
+                        <h3 className="text-lg font-bold text-gray-900 mb-1">
+                          {demo.company_name}
+                        </h3>
+                        <p className="text-sm text-gray-500 font-mono">
+                          /{demo.slug}
+                        </p>
+                      </div>
+                      <button
+                        onClick={() => handleDeleteDemo(demo.id, demo.slug)}
+                        className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition"
+                      >
+                        <Trash2 size={18} />
+                      </button>
+                    </div>
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => window.open(`/${demo.slug}`, '_blank')}
+                        className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition"
+                      >
+                        <ExternalLink size={16} />
+                        View Page
+                      </button>
+                      <button
+                        onClick={() => copyToClipboard(demo.slug)}
+                        className="px-4 py-2 border border-gray-300 rounded-lg font-medium hover:bg-gray-50 transition flex items-center gap-2"
+                      >
+                        <Copy size={16} />
+                        {copiedSlug === demo.slug ? 'Copied!' : 'Copy URL'}
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 text-center mb-6">
+                <p className="text-gray-600">No demo pages created yet</p>
+              </div>
+            )}
+          </div>
+
           <div className="flex items-center justify-between mb-8">
             <h1 className="text-4xl font-bold text-gray-900">All Orders</h1>
             <div className="text-sm text-gray-600">

@@ -13,6 +13,7 @@ import { FAQ } from './pages/FAQ';
 import { Terms } from './pages/Terms';
 import { Privacy } from './pages/Privacy';
 import { Demo } from './pages/Demo';
+import { CustomDemo } from './pages/CustomDemo';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -71,6 +72,7 @@ function AppContent() {
           <Route path="/payment-success" element={<PaymentSuccess />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/admin" element={<Admin />} />
+          <Route path="/:slug" element={<CustomDemo />} />
         </Routes>
       </AuthProvider>
     </>
