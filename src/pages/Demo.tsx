@@ -8,20 +8,43 @@ export function Demo() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    const existingScript = document.querySelector('script[src="https://your.dashbot.com.au/bot.js"]');
+    if (existingScript) {
+      existingScript.remove();
+    }
+
     const script = document.createElement('script');
     script.src = 'https://your.dashbot.com.au/bot.js';
     script.setAttribute('data-bot', 'RHS_BOT');
+    script.onload = () => {
+      console.log('Dashbot script loaded successfully');
+    };
+    script.onerror = () => {
+      console.error('Failed to load Dashbot script');
+    };
     document.body.appendChild(script);
 
     return () => {
-      const existingScript = document.querySelector('script[src="https://your.dashbot.com.au/bot.js"]');
-      if (existingScript) {
-        existingScript.remove();
+      const scriptToRemove = document.querySelector('script[src="https://your.dashbot.com.au/bot.js"]');
+      if (scriptToRemove) {
+        scriptToRemove.remove();
       }
 
-      const chatWidget = document.querySelector('[id*="dashbot"], [class*="dashbot"], [id*="chat"], iframe[src*="dashbot"]');
-      if (chatWidget) {
-        chatWidget.remove();
+      const allWidgets = document.querySelectorAll('[id*="dashbot"], [class*="dashbot"], [id*="chat-widget"], [class*="chat-widget"], iframe[src*="dashbot"], [data-bot]');
+      allWidgets.forEach(widget => widget.remove());
+
+      const shadowHosts = document.querySelectorAll('*');
+      shadowHosts.forEach(host => {
+        if (host.shadowRoot) {
+          const shadowChat = host.shadowRoot.querySelector('[id*="chat"], [class*="chat"], [id*="bot"], [class*="bot"]');
+          if (shadowChat) {
+            host.remove();
+          }
+        }
+      });
+
+      if (window.dashbot) {
+        delete window.dashbot;
       }
     };
   }, []);
