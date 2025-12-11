@@ -19,6 +19,9 @@ interface DemoPage {
   company_name: string;
   slug: string;
   embed_code: string;
+  custom_questions?: string[] | null;
+  view_count: number;
+  last_visited?: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -33,7 +36,14 @@ export function Admin() {
   const [expandedUrls, setExpandedUrls] = useState<Set<string>>(new Set());
   const [demoPages, setDemoPages] = useState<DemoPage[]>([]);
   const [showDemoForm, setShowDemoForm] = useState(false);
-  const [newDemo, setNewDemo] = useState({ companyName: '', embedCode: '' });
+  const [newDemo, setNewDemo] = useState({
+    companyName: '',
+    embedCode: '',
+    question1: '',
+    question2: '',
+    question3: '',
+    question4: ''
+  });
   const [creatingDemo, setCreatingDemo] = useState(false);
   const [copiedSlug, setCopiedSlug] = useState<string | null>(null);
 
@@ -101,17 +111,32 @@ export function Admin() {
     try {
       const slug = createSlug(newDemo.companyName);
 
+      const customQuestions = [
+        newDemo.question1.trim(),
+        newDemo.question2.trim(),
+        newDemo.question3.trim(),
+        newDemo.question4.trim()
+      ].filter(q => q.length > 0);
+
       const { error } = await supabase
         .from('demo_pages')
         .insert([{
           company_name: newDemo.companyName.trim(),
           slug,
-          embed_code: newDemo.embedCode.trim()
+          embed_code: newDemo.embedCode.trim(),
+          custom_questions: customQuestions.length === 4 ? customQuestions : null
         }]);
 
       if (error) throw error;
 
-      setNewDemo({ companyName: '', embedCode: '' });
+      setNewDemo({
+        companyName: '',
+        embedCode: '',
+        question1: '',
+        question2: '',
+        question3: '',
+        question4: ''
+      });
       setShowDemoForm(false);
       await loadDemoPages();
       alert(`Demo page created! URL: https://dashbot.com.au/${slug}`);
@@ -296,6 +321,44 @@ export function Admin() {
                       rows={4}
                     />
                   </div>
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      Custom Sample Questions (Optional - Leave blank to use defaults)
+                    </label>
+                    <p className="text-xs text-gray-500 mb-2">
+                      Enter 4 custom questions specific to this business, or leave blank to use generic defaults
+                    </p>
+                    <div className="space-y-2">
+                      <input
+                        type="text"
+                        value={newDemo.question1}
+                        onChange={(e) => setNewDemo({ ...newDemo, question1: e.target.value })}
+                        placeholder="Question 1"
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                      />
+                      <input
+                        type="text"
+                        value={newDemo.question2}
+                        onChange={(e) => setNewDemo({ ...newDemo, question2: e.target.value })}
+                        placeholder="Question 2"
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                      />
+                      <input
+                        type="text"
+                        value={newDemo.question3}
+                        onChange={(e) => setNewDemo({ ...newDemo, question3: e.target.value })}
+                        placeholder="Question 3"
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                      />
+                      <input
+                        type="text"
+                        value={newDemo.question4}
+                        onChange={(e) => setNewDemo({ ...newDemo, question4: e.target.value })}
+                        placeholder="Question 4"
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                      />
+                    </div>
+                  </div>
                   <div className="flex gap-2">
                     <button
                       onClick={handleCreateDemo}
@@ -317,7 +380,14 @@ export function Admin() {
                     <button
                       onClick={() => {
                         setShowDemoForm(false);
-                        setNewDemo({ companyName: '', embedCode: '' });
+                        setNewDemo({
+                          companyName: '',
+                          embedCode: '',
+                          question1: '',
+                          question2: '',
+                          question3: '',
+                          question4: ''
+                        });
                       }}
                       className="px-6 py-2 border border-gray-300 rounded-lg font-semibold hover:bg-gray-50 transition"
                     >
@@ -350,6 +420,20 @@ export function Admin() {
                       >
                         <Trash2 size={18} />
                       </button>
+                    </div>
+                    <div className="mb-3 p-3 bg-gray-50 rounded-lg">
+                      <div className="flex items-center justify-between text-sm">
+                        <span className="text-gray-600">Views:</span>
+                        <span className="font-bold text-blue-600">{demo.view_count}</span>
+                      </div>
+                      {demo.last_visited && (
+                        <div className="flex items-center justify-between text-sm mt-1">
+                          <span className="text-gray-600">Last Visited:</span>
+                          <span className="font-medium text-gray-900">
+                            {new Date(demo.last_visited).toLocaleString()}
+                          </span>
+                        </div>
+                      )}
                     </div>
                     <div className="flex gap-2">
                       <button

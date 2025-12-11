@@ -9,6 +9,9 @@ interface DemoPage {
   company_name: string;
   slug: string;
   embed_code: string;
+  custom_questions?: string[] | null;
+  view_count: number;
+  last_visited?: string | null;
 }
 
 export function CustomDemo() {
@@ -16,6 +19,17 @@ export function CustomDemo() {
   const navigate = useNavigate();
   const [demoPage, setDemoPage] = useState<DemoPage | null>(null);
   const [loading, setLoading] = useState(true);
+
+  const defaultQuestions = [
+    'What are your opening hours?',
+    'How can I contact you?',
+    'Where are you located?',
+    'What services do you provide?'
+  ];
+
+  const sampleQuestions = demoPage?.custom_questions && demoPage.custom_questions.length === 4
+    ? demoPage.custom_questions
+    : defaultQuestions;
 
   useEffect(() => {
     loadDemoPage();
@@ -79,6 +93,14 @@ export function CustomDemo() {
     };
   }, [demoPage]);
 
+  const trackView = async (demoId: string) => {
+    try {
+      await supabase.rpc('increment_demo_view', { demo_id: demoId });
+    } catch (error) {
+      console.error('Error tracking view:', error);
+    }
+  };
+
   const loadDemoPage = async () => {
     if (!slug) {
       navigate('/');
@@ -100,6 +122,7 @@ export function CustomDemo() {
       }
 
       setDemoPage(data);
+      trackView(data.id);
     } catch (error) {
       console.error('Error loading demo page:', error);
       navigate('/');
@@ -199,21 +222,17 @@ export function CustomDemo() {
               Try These Sample Questions
             </h3>
             <p className="text-gray-600 text-center mb-6">
-              Not sure what to ask? Try these common questions to see how the chatbot responds:
+              Not sure what to ask? Try these questions to see how the chatbot responds:
             </p>
             <div className="grid md:grid-cols-2 gap-4">
-              <div className="p-4 bg-gray-50 rounded-xl border border-gray-200 hover:bg-gray-100 transition cursor-pointer">
-                <p className="text-gray-700">What are your opening hours?</p>
-              </div>
-              <div className="p-4 bg-gray-50 rounded-xl border border-gray-200 hover:bg-gray-100 transition cursor-pointer">
-                <p className="text-gray-700">How can I contact you?</p>
-              </div>
-              <div className="p-4 bg-gray-50 rounded-xl border border-gray-200 hover:bg-gray-100 transition cursor-pointer">
-                <p className="text-gray-700">Where are you located?</p>
-              </div>
-              <div className="p-4 bg-gray-50 rounded-xl border border-gray-200 hover:bg-gray-100 transition cursor-pointer">
-                <p className="text-gray-700">What services do you provide?</p>
-              </div>
+              {sampleQuestions.map((question, index) => (
+                <div
+                  key={index}
+                  className="p-4 bg-gray-50 rounded-xl border border-gray-200 hover:bg-gray-100 transition cursor-pointer"
+                >
+                  <p className="text-gray-700">{question}</p>
+                </div>
+              ))}
             </div>
           </div>
         </div>
