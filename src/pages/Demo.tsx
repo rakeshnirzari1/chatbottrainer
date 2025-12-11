@@ -11,13 +11,17 @@ export function Demo() {
     const script = document.createElement('script');
     script.src = 'https://your.dashbot.com.au/bot.js';
     script.setAttribute('data-bot', 'RHS_BOT');
-    script.async = true;
     document.body.appendChild(script);
 
     return () => {
       const existingScript = document.querySelector('script[src="https://your.dashbot.com.au/bot.js"]');
       if (existingScript) {
         existingScript.remove();
+      }
+
+      const chatWidget = document.querySelector('[id*="dashbot"], [class*="dashbot"], [id*="chat"], iframe[src*="dashbot"]');
+      if (chatWidget) {
+        chatWidget.remove();
       }
     };
   }, []);
