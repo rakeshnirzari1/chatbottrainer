@@ -129,14 +129,17 @@ export function CustomDemo() {
           <div className="text-center mb-12">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-100 text-blue-700 rounded-full text-sm font-semibold mb-6">
               <Sparkles size={16} />
-              Custom Demo for {demoPage.company_name}
+              Personalized Demo
             </div>
-            <h1 className="text-5xl font-bold text-gray-900 mb-6">
-              Experience Your AI-Powered Chatbot
+            <h1 className="text-6xl md:text-7xl font-bold text-gray-900 mb-4">
+              {demoPage.company_name}
             </h1>
+            <p className="text-2xl md:text-3xl font-semibold text-blue-600 mb-6">
+              Experience Your AI-Powered Chatbot
+            </p>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              We've created this personalized demo specifically for {demoPage.company_name}.
-              Test our intelligent chatbot trained with your industry-specific knowledge.
+              We've created this personalized demo specifically for your business.
+              Test our intelligent chatbot and see how it can help your customers.
             </p>
           </div>
 
@@ -146,7 +149,7 @@ export function CustomDemo() {
             </h2>
             <p className="text-lg text-gray-600 text-center mb-8">
               Click the chat widget in the bottom right corner to start a conversation.
-              Ask questions relevant to {demoPage.company_name} and see how our AI responds.
+              Ask questions and see how our AI responds instantly.
             </p>
 
             <div className="grid md:grid-cols-3 gap-6 mb-8">
@@ -196,20 +199,20 @@ export function CustomDemo() {
               Try These Sample Questions
             </h3>
             <p className="text-gray-600 text-center mb-6">
-              Not sure what to ask? Try these questions to see how our chatbot responds:
+              Not sure what to ask? Try these common questions to see how the chatbot responds:
             </p>
             <div className="grid md:grid-cols-2 gap-4">
-              <div className="p-4 bg-gray-50 rounded-xl border border-gray-200">
-                <p className="text-gray-700">What services does {demoPage.company_name} offer?</p>
+              <div className="p-4 bg-gray-50 rounded-xl border border-gray-200 hover:bg-gray-100 transition cursor-pointer">
+                <p className="text-gray-700">What are your opening hours?</p>
               </div>
-              <div className="p-4 bg-gray-50 rounded-xl border border-gray-200">
-                <p className="text-gray-700">How can I get in touch with {demoPage.company_name}?</p>
+              <div className="p-4 bg-gray-50 rounded-xl border border-gray-200 hover:bg-gray-100 transition cursor-pointer">
+                <p className="text-gray-700">How can I contact you?</p>
               </div>
-              <div className="p-4 bg-gray-50 rounded-xl border border-gray-200">
-                <p className="text-gray-700">What makes {demoPage.company_name} unique?</p>
+              <div className="p-4 bg-gray-50 rounded-xl border border-gray-200 hover:bg-gray-100 transition cursor-pointer">
+                <p className="text-gray-700">Where are you located?</p>
               </div>
-              <div className="p-4 bg-gray-50 rounded-xl border border-gray-200">
-                <p className="text-gray-700">Tell me more about your programs and offerings</p>
+              <div className="p-4 bg-gray-50 rounded-xl border border-gray-200 hover:bg-gray-100 transition cursor-pointer">
+                <p className="text-gray-700">What services do you provide?</p>
               </div>
             </div>
           </div>
