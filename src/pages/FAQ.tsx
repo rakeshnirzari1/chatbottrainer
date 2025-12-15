@@ -57,7 +57,7 @@ export function FAQ() {
     {
       category: 'Features',
       question: 'Can I update my chatbot\'s knowledge base?',
-      answer: 'Yes! You can retrain your chatbot at any time with updated content from your website or add specific information manually.'
+      answer: 'Yes! We can retrain your chatbot at any time with updated content from your website or add specific information manually. First refresh is free each year however if you want to update more frequently, we can provide you very reasonable cost to do so as it cost money to retrain the bots'
     },
     {
       category: 'Features',
