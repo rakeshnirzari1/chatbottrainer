@@ -196,20 +196,20 @@ export function Landing() {
               Trusted By Businesses
             </h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Join hundreds of companies using AI to improve customer experience
+              Join many companies using AI to improve customer experience
             </p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             <div className="text-center p-8 bg-gradient-to-br from-slate-50 to-white rounded-2xl border border-gray-100">
               <Users className="w-12 h-12 text-blue-600 mx-auto mb-4" />
-              <div className="text-4xl font-bold text-gray-900 mb-2">10,000+</div>
+              <div className="text-4xl font-bold text-gray-900 mb-2">10+</div>
               <p className="text-gray-600 font-medium">Active Chatbots</p>
             </div>
 
             <div className="text-center p-8 bg-gradient-to-br from-slate-50 to-white rounded-2xl border border-gray-100">
               <MessageSquare className="w-12 h-12 text-green-600 mx-auto mb-4" />
-              <div className="text-4xl font-bold text-gray-900 mb-2">5M+</div>
+              <div className="text-4xl font-bold text-gray-900 mb-2">5K+</div>
               <p className="text-gray-600 font-medium">Conversations Handled</p>
             </div>
 
