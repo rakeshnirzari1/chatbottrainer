@@ -47,7 +47,7 @@ export function FAQ() {
     {
       category: 'Features',
       question: 'Can I customise how my chatbot looks?',
-      answer: 'Yes! You can customize the appearance of your chatbot including colors and branding to match your website\'s design.'
+      answer: 'Yes! You can customise the appearance of your chatbot including colors and branding to match your website\'s design.'
     },
     {
       category: 'Features',
@@ -82,7 +82,7 @@ export function FAQ() {
     {
       category: 'Technical',
       question: 'What happens if my website changes?',
-      answer: 'You can easily retrain your chatbot whenever you update your website content. This ensures your chatbot always has the most current information.'
+      answer: 'We can easily retrain your chatbot whenever you update your website content. This ensures your chatbot always has the most current information.'
     },
     {
       category: 'Support',
@@ -91,7 +91,7 @@ export function FAQ() {
     },
     {
       category: 'Support',
-      question: 'Can I get help with customization?',
+      question: 'Can I get help with customisation?',
       answer: 'Yes! Our support team can help with customization questions and provide guidance on getting the most out of your chatbot.'
     },
     {
