@@ -46,8 +46,8 @@ export function FAQ() {
     },
     {
       category: 'Features',
-      question: 'Can I customize how my chatbot looks?',
-      answer: 'Yes! You can customize the appearance of your chatbot including colors, position, and branding to match your website\'s design.'
+      question: 'Can I customise how my chatbot looks?',
+      answer: 'Yes! You can customize the appearance of your chatbot including colors and branding to match your website\'s design.'
     },
     {
       category: 'Features',
