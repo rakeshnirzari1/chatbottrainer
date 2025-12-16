@@ -66,7 +66,7 @@ export function Landing() {
     <div className="max-w-6xl mx-auto">
       <div className="text-center mb-12">
         <p className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-8">
-          Trusted by Leading Organizations
+          Trusted by Local Companies
         </p>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-12 items-center justify-items-center">
