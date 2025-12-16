@@ -62,40 +62,54 @@ export function Landing() {
       </section>
 
       <section className="py-16 bg-white border-b border-gray-100">
-        <div className="container mx-auto px-6">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-12">
-              <p className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-8">
-                Trusted by Leading Organizations
-              </p>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-12 items-center justify-items-center">
-              <div className="grayscale hover:grayscale-0 transition duration-300 opacity-60 hover:opacity-100">
-                <img
-                  src="/chatswoodpodiatry.jpg"
-                  alt="Chatswood Podiatry"
-                  className="h-16 w-auto object-contain"
-                />
-              </div>
-              <div className="grayscale hover:grayscale-0 transition duration-300 opacity-60 hover:opacity-100">
-                <img
-                  src="/gpvacancy.png"
-                  alt="GP Vacancy"
-                  className="h-16 w-auto object-contain"
-                />
-              </div>
-              <div className="grayscale hover:grayscale-0 transition duration-300 opacity-60 hover:opacity-100">
-                <img
-                  src="/dashbot.png"
-                  alt="DashBot"
-                  className="h-16 w-auto object-contain"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
+  <div className="container mx-auto px-6">
+    <div className="max-w-6xl mx-auto">
+      <div className="text-center mb-12">
+        <p className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-8">
+          Trusted by Leading Organizations
+        </p>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-12 items-center justify-items-center">
+        <a 
+          href="https://chatswoodpodiatry.com.au" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="grayscale hover:grayscale-0 transition duration-300 opacity-60 hover:opacity-100 block"
+        >
+          <img
+            src="/chatswoodpodiatry.jpg"
+            alt="Chatswood Podiatry"
+            className="h-16 w-auto object-contain"
+          />
+        </a>
+        <a 
+          href="https://gpvacancy.com.au" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="grayscale hover:grayscale-0 transition duration-300 opacity-60 hover:opacity-100 block"
+        >
+          <img
+            src="/gpvacancy.png"
+            alt="GP Vacancy"
+            className="h-16 w-auto object-contain"
+          />
+        </a>
+        <a 
+          href="https://dashbot.com.au" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="grayscale hover:grayscale-0 transition duration-300 opacity-60 hover:opacity-100 block"
+        >
+          <img
+            src="/dashbot.png"
+            alt="DashBot"
+            className="h-16 w-auto object-contain"
+          />
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
       <section className="py-20 bg-white">
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
