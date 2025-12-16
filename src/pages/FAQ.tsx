@@ -27,7 +27,7 @@ export function FAQ() {
     {
       category: 'Getting Started',
       question: 'How long does it take to set up a chatbot?',
-      answer: 'Most chatbots are ready in under 5 minutes. The time depends on the size of your website, but our AI works quickly to crawl and train on your content.'
+      answer: 'Most chatbots are ready in under 24 hours. The time depends on the size of your website, but our AI works quickly to crawl and train on your content.'
     },
     {
       category: 'Pricing',
