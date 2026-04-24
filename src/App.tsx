@@ -80,31 +80,13 @@ function AppContent() {
     </>
   );
 }
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { LoginPage } from './pages/LoginPage';
-import { SignupPage } from './pages/SignupPage';
-import { DashboardPage } from './pages/DashboardPage';
-import { SuccessPage } from './pages/SuccessPage';
-import { ProtectedRoute } from './components/auth/ProtectedRoute';
-import { PricingSection } from './components/pricing/PricingSection';
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/signup" element={<SignupPage />} />
-        <Route path="/success" element={<SuccessPage />} />
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute>
-              <DashboardPage />
-            </ProtectedRoute>
-          }
-        />
-        <Route path="/" element={<PricingSection />} />
-      </Routes>
-    </Router>
-  )
+    <BrowserRouter>
+      <AppContent />
+    </BrowserRouter>
+  );
 }
+
+export default App;
