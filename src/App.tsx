@@ -14,6 +14,7 @@ import { Terms } from './pages/Terms';
 import { Privacy } from './pages/Privacy';
 import { Demo } from './pages/Demo';
 import { CustomDemo } from './pages/CustomDemo';
+import { Pricing } from './pages/Pricing';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -65,6 +66,7 @@ function AppContent() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/terms" element={<Terms />} />
+          <Route path="/pricing" element={<Pricing />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/demo" element={<Demo />} />
           <Route path="/onboarding" element={<Onboarding />} />

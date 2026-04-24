@@ -5,7 +5,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { Footer } from '../components/Footer';
 import { Logo } from '../components/Logo';
 import { supabase, Order } from '../lib/supabase';
-import { formatPrice } from '../lib/pricing';
+import { formatPriceMonthly } from '../lib/pricing';
 import { isAdmin } from '../lib/admin';
 
 export function Dashboard() {
@@ -231,7 +231,7 @@ export function Dashboard() {
                         <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-xs sm:text-sm text-gray-600">
                           <span>{order.total_urls} URLs</span>
                           <span>•</span>
-                          <span>{formatPrice(order.final_price_cents)}</span>
+                          <span>{formatPriceMonthly(order.final_price_cents)}</span>
                           <span>•</span>
                           <span>{new Date(order.created_at).toLocaleDateString()}</span>
                         </div>
@@ -299,7 +299,7 @@ export function Dashboard() {
                             <div>
                               <p className="font-semibold text-gray-900 mb-1">Ready to go live?</p>
                               <p className="text-sm text-gray-600">
-                                Complete payment to receive the embed code and deploy to your website
+                                Subscribe to receive the embed code and deploy to your website
                               </p>
                             </div>
                             <button
@@ -307,7 +307,7 @@ export function Dashboard() {
                               className="flex items-center gap-2 px-4 sm:px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition whitespace-nowrap w-full sm:w-auto justify-center sm:justify-start"
                             >
                               <CreditCard size={18} />
-                              Pay {formatPrice(order.final_price_cents)}
+                              Subscribe {formatPriceMonthly(order.final_price_cents)}
                             </button>
                           </div>
                         </div>

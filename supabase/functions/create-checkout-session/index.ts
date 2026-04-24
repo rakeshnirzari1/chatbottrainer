@@ -18,12 +18,10 @@ interface CheckoutRequest {
 }
 
 function getPriceId(urlCount: number): string | null {
-  if (urlCount <= 10) return Deno.env.get('STRIPE_PRICE_1_10_URLS');
-  if (urlCount <= 50) return Deno.env.get('STRIPE_PRICE_11_50_URLS');
-  if (urlCount <= 200) return Deno.env.get('STRIPE_PRICE_51_200_URLS');
-  if (urlCount <= 500) return Deno.env.get('STRIPE_PRICE_201_500_URLS');
-  if (urlCount <= 1000) return Deno.env.get('STRIPE_PRICE_501_1000_URLS');
-  return null;
+  if (urlCount <= 10) return Deno.env.get('STRIPE_PRICE_1_10_URLS') ?? null;
+  if (urlCount <= 100) return Deno.env.get('STRIPE_PRICE_11_100_URLS') ?? null;
+  if (urlCount <= 500) return Deno.env.get('STRIPE_PRICE_101_500_URLS') ?? null;
+  return Deno.env.get('STRIPE_PRICE_500_PLUS_URLS') ?? null;
 }
 
 Deno.serve(async (req: Request) => {
@@ -150,7 +148,7 @@ Deno.serve(async (req: Request) => {
           quantity: 1,
         },
       ],
-      mode: 'payment',
+      mode: 'subscription',
       success_url: `${origin}/payment-success?session_id={CHECKOUT_SESSION_ID}&order_id=${order.id}`,
       cancel_url: `${origin}/checkout`,
       customer_email: user.email,
@@ -159,6 +157,12 @@ Deno.serve(async (req: Request) => {
         user_id: user.id,
         website_url: websiteUrl,
         total_urls: totalUrls.toString(),
+      },
+      subscription_data: {
+        metadata: {
+          order_id: order.id,
+          user_id: user.id,
+        },
       },
     });
 

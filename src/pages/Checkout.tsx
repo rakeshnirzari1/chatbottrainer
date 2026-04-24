@@ -111,10 +111,10 @@ export function Checkout() {
               Secure Checkout
             </div>
             <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
-              Complete Your Purchase
+              Start Your Subscription
             </h1>
             <p className="text-gray-600 text-sm md:text-base">
-              Review your order details and proceed to secure payment
+              Review your details and proceed to set up your monthly subscription
             </p>
           </div>
 
@@ -183,12 +183,12 @@ export function Checkout() {
               </div>
 
               <div className="p-4 bg-green-50 rounded-lg border border-green-200">
-                <h3 className="font-semibold text-gray-900 mb-2 text-sm md:text-base">Secure Payment</h3>
+                <h3 className="font-semibold text-gray-900 mb-2 text-sm md:text-base">Secure Subscription</h3>
                 <p className="text-xs md:text-sm text-gray-600 mb-2">
-                  Your payment is processed securely through Stripe. We never store your credit card information.
+                  Your subscription is processed securely through Stripe. Cancel anytime from your Stripe portal.
                 </p>
                 <p className="text-xs md:text-sm text-gray-600">
-                  After payment, we'll train your AI chatbot and you'll get instant access in your dashboard.
+                  After subscribing, we'll train your AI chatbot and you'll get instant access in your dashboard.
                 </p>
               </div>
 
@@ -205,7 +205,7 @@ export function Checkout() {
                 ) : (
                   <>
                     <ShoppingCart size={20} />
-                    Proceed to Payment
+                    Proceed to Subscribe
                   </>
                 )}
               </button>

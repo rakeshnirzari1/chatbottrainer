@@ -63,14 +63,14 @@ export function Terms() {
 
               <h2 className="text-3xl font-bold text-gray-900 mb-4 mt-8">5. Payment Terms</h2>
               <p className="text-gray-600 leading-relaxed mb-4">
-                DashBot operates on a one-time payment model:
+                DashBot operates on a monthly subscription model:
               </p>
               <ul className="list-disc pl-6 text-gray-600 space-y-2 mb-6">
                 <li>Prices are based on the number of URLs you wish to train your chatbot on</li>
-                <li>Payment is required before deployment of your chatbot</li>
+                <li>An active subscription is required to keep your chatbot deployed</li>
                 <li>All payments are processed securely through our payment provider</li>
+                <li>You can cancel your subscription at any time; your chatbot remains active until the end of the billing period</li>
                 <li>Prices are subject to change with notice</li>
-                <li>Refunds are handled on a case-by-case basis</li>
               </ul>
 
               <h2 className="text-3xl font-bold text-gray-900 mb-4 mt-8">6. Intellectual Property</h2>

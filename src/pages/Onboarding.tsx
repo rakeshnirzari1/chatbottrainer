@@ -6,7 +6,7 @@ import { AuthModal } from '../components/AuthModal';
 import { Header } from '../components/Header';
 import { Logo } from '../components/Logo';
 import { crawlWebsite, CrawlProgress } from '../lib/crawler';
-import { calculatePrice, formatPrice } from '../lib/pricing';
+import { calculatePrice, formatPriceMonthly, PRICING_TIERS } from '../lib/pricing';
 import { saveOnboardingState, loadOnboardingState, clearOnboardingState } from '../lib/storage';
 import { supabase } from '../lib/supabase';
 
@@ -189,12 +189,6 @@ export function Onboarding() {
       return;
     }
 
-    const price = calculatePrice(selectedUrls.size);
-    if (price === -1) {
-      alert('Please select up to 1000 URLs or contact us for custom pricing');
-      return;
-    }
-
     if (!user) {
       setShowAuthModal(true);
       return;
@@ -226,7 +220,6 @@ export function Onboarding() {
   };
 
   const price = calculatePrice(selectedUrls.size);
-  const canProceed = price !== -1;
 
   if (step === 'input') {
     return (
@@ -499,26 +492,19 @@ export function Onboarding() {
                 </div>
 
                 <div className="mb-6 p-4 bg-blue-50 rounded-lg">
-                  <div className="text-gray-600 text-sm mb-1">Estimated Price</div>
+                  <div className="text-gray-600 text-sm mb-1">Monthly Subscription</div>
                   <div className="text-3xl font-bold text-blue-600">
-                    {canProceed ? formatPrice(price) : 'Custom'}
+                    {formatPriceMonthly(price)}
                   </div>
                   <p className="text-xs text-gray-600 mt-2">
-                    Get your free demo first, then upgrade when ready
+                    Get your free demo first, then subscribe when ready
                   </p>
                 </div>
 
-                {!canProceed && (
-                  <div className="mb-4 p-3 bg-orange-50 border border-orange-200 rounded-lg">
-                    <p className="text-xs sm:text-sm text-orange-800">
-                      Please select up to 1000 URLs or contact us for custom pricing
-                    </p>
-                  </div>
-                )}
 
                 <button
                   onClick={handleRequestDemo}
-                  disabled={selectedUrls.size === 0 || !canProceed || isSubmitting}
+                  disabled={selectedUrls.size === 0 || isSubmitting}
                   className="w-full bg-blue-600 text-white py-3 rounded-lg font-bold text-sm sm:text-base hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                 >
                   {isSubmitting ? (
@@ -532,26 +518,12 @@ export function Onboarding() {
                 </button>
 
                 <div className="mt-6 pt-6 border-t border-gray-200 text-xs text-gray-500 space-y-1">
-                  <div className="flex justify-between">
-                    <span>1-10 URLs</span>
-                    <span className="font-semibold">$100</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>11-50 URLs</span>
-                    <span className="font-semibold">$200</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>51-200 URLs</span>
-                    <span className="font-semibold">$500</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>201-500 URLs</span>
-                    <span className="font-semibold">$900</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>501-1000 URLs</span>
-                    <span className="font-semibold">$1,200</span>
-                  </div>
+                  {PRICING_TIERS.map((tier) => (
+                    <div key={tier.id} className="flex justify-between">
+                      <span>{tier.urlRange}</span>
+                      <span className="font-semibold">${tier.priceMonthly.toFixed(2)}/mo</span>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>

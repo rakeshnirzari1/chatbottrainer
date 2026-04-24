@@ -32,7 +32,7 @@ export function FAQ() {
     {
       category: 'Pricing',
       question: 'How is pricing calculated?',
-      answer: 'Pricing is based on the number of URLs you want to train your chatbot on. We offer transparent, one-time payment tiers starting at $100 for 1-10 URLs. There are no subscription fees or hidden costs.'
+      answer: 'Pricing is based on the number of URLs you want to train your chatbot on. We offer affordable monthly plans starting at $9.99/month for 1-10 URLs. No hidden costs and you can cancel anytime.'
     },
     {
       category: 'Pricing',
@@ -41,8 +41,8 @@ export function FAQ() {
     },
     {
       category: 'Pricing',
-      question: 'Are there any ongoing fees or subscriptions?',
-      answer: 'No. DashBot uses a one-time payment model. Once you pay for your chatbot, it\'s yours to use indefinitely with no recurring charges.'
+      question: 'Can I cancel my subscription?',
+      answer: 'Yes! You can cancel your subscription at any time. Your chatbot will remain active until the end of your current billing period. No cancellation fees.'
     },
     {
       category: 'Features',

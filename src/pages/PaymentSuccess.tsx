@@ -81,10 +81,10 @@ export function PaymentSuccess() {
               <CheckCircle className="text-green-600" size={56} />
             </div>
             <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">
-              Payment Successful!
+              Subscription Active!
             </h1>
             <p className="text-lg md:text-xl text-gray-600 mb-8">
-              Thank you for your purchase. Your AI chatbot is being prepared.
+              Thank you for subscribing. Your AI chatbot is being prepared.
             </p>
           </div>
 

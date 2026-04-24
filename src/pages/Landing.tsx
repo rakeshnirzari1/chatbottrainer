@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Bot, Zap, Shield, TrendingUp, CheckCircle, MessageSquare, Clock, Globe, BarChart3, Users, Lock } from 'lucide-react';
+import { Bot, Zap, Shield, TrendingUp, MessageSquare, Clock, Globe, BarChart3, Users } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
@@ -273,62 +273,63 @@ export function Landing() {
 
       <section className="py-20 bg-gradient-to-br from-blue-50 to-slate-50">
         <div className="container mx-auto px-6">
-          <div className="max-w-4xl mx-auto">
+          <div className="max-w-5xl mx-auto">
             <div className="text-center mb-12">
               <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
                 Simple, Transparent Pricing
               </h2>
               <p className="text-xl text-gray-600">
-                One-time payment based on your website size. No subscriptions or hidden fees.
+                Affordable monthly plans based on your website size. Cancel anytime.
               </p>
             </div>
 
-            <div className="bg-white p-10 rounded-2xl shadow-lg border border-gray-100">
-              <div className="space-y-4 mb-8">
-                {[
-                  { range: '1-10 URLs', price: '$100', popular: false },
-                  { range: '11-50 URLs', price: '$200', popular: true },
-                  { range: '51-200 URLs', price: '$500', popular: false },
-                  { range: '201-500 URLs', price: '$900', popular: false },
-                  { range: '501-1,000 URLs', price: '$1,200', popular: false }
-                ].map((tier) => (
-                  <div
-                    key={tier.range}
-                    className={`flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 p-4 rounded-xl border-2 transition ${
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-10">
+              {[
+                { range: '1-10 URLs', price: '$9.99', label: 'Starter', popular: false },
+                { range: '11-100 URLs', price: '$19.99', label: 'Growth', popular: true },
+                { range: '101-500 URLs', price: '$29.99', label: 'Business', popular: false },
+                { range: '500+ URLs', price: '$49.99', label: 'Enterprise', popular: false },
+              ].map((tier) => (
+                <div
+                  key={tier.range}
+                  className={`relative bg-white p-6 rounded-2xl border-2 transition hover:shadow-lg ${
+                    tier.popular
+                      ? 'border-blue-600 shadow-md'
+                      : 'border-gray-200 hover:border-blue-300'
+                  }`}
+                >
+                  {tier.popular && (
+                    <span className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-blue-600 text-white text-xs font-bold rounded-full whitespace-nowrap">
+                      MOST POPULAR
+                    </span>
+                  )}
+                  <h3 className="font-bold text-gray-900 mb-1">{tier.label}</h3>
+                  <p className="text-sm text-gray-500 mb-4">{tier.range}</p>
+                  <div className="mb-4">
+                    <span className="text-3xl font-bold text-gray-900">{tier.price}</span>
+                    <span className="text-gray-500 text-sm">/mo</span>
+                  </div>
+                  <button
+                    onClick={handleGetStarted}
+                    className={`w-full py-2.5 rounded-lg font-semibold text-sm transition ${
                       tier.popular
-                        ? 'border-blue-600 bg-blue-50'
-                        : 'border-gray-200 bg-white hover:border-blue-300'
+                        ? 'bg-blue-600 text-white hover:bg-blue-700'
+                        : 'bg-gray-900 text-white hover:bg-gray-800'
                     }`}
                   >
-                    <div className="flex items-center gap-3">
-                      <CheckCircle className={tier.popular ? "text-blue-600 flex-shrink-0" : "text-green-500 flex-shrink-0"} size={24} />
-                      <span className="text-lg font-semibold text-gray-900">{tier.range}</span>
-                      {tier.popular && (
-                        <span className="px-3 py-1 bg-blue-600 text-white text-xs font-bold rounded-full whitespace-nowrap">
-                          MOST POPULAR
-                        </span>
-                      )}
-                    </div>
-                    <span className="text-2xl sm:text-3xl font-bold text-gray-900">{tier.price}</span>
-                  </div>
-                ))}
-              </div>
-
-              <div className="bg-gradient-to-br from-slate-50 to-blue-50 p-6 rounded-xl">
-                <div className="flex items-start gap-3 mb-3">
-                  <Lock className="text-blue-600 flex-shrink-0 mt-1" size={20} />
-                  <div>
-                    <h4 className="font-semibold text-gray-900 mb-1">What's Included:</h4>
-                    <ul className="text-gray-700 space-y-1 text-sm">
-                      <li>• AI-powered chatbot trained on your content</li>
-                      <li>• Unlimited conversations and messages</li>
-                      <li>• Easy website integration with embed code</li>
-                      <li>• Regular updates and improvements</li>
-                      <li>• Email support</li>
-                    </ul>
-                  </div>
+                    Start Free Demo
+                  </button>
                 </div>
-              </div>
+              ))}
+            </div>
+
+            <div className="text-center">
+              <button
+                onClick={() => navigate('/pricing')}
+                className="text-blue-600 font-semibold hover:text-blue-700 transition text-lg"
+              >
+                View full plan comparison →
+              </button>
             </div>
           </div>
         </div>
