@@ -1,21 +1,66 @@
+export interface PricingTier {
+  id: string;
+  name: string;
+  urlRange: string;
+  minUrls: number;
+  maxUrls: number;
+  priceMonthly: number;
+  popular: boolean;
+}
+
+export const pricingTiers: PricingTier[] = [
+  {
+    id: 'starter',
+    name: 'Starter',
+    urlRange: '1-10 URLs',
+    minUrls: 1,
+    maxUrls: 10,
+    priceMonthly: 999,
+    popular: false,
+  },
+  {
+    id: 'growth',
+    name: 'Growth',
+    urlRange: '11-100 URLs',
+    minUrls: 11,
+    maxUrls: 100,
+    priceMonthly: 1999,
+    popular: true,
+  },
+  {
+    id: 'professional',
+    name: 'Professional',
+    urlRange: '101-500 URLs',
+    minUrls: 101,
+    maxUrls: 500,
+    priceMonthly: 2999,
+    popular: false,
+  },
+  {
+    id: 'enterprise',
+    name: 'Enterprise',
+    urlRange: '500+ URLs',
+    minUrls: 501,
+    maxUrls: Infinity,
+    priceMonthly: 4999,
+    popular: false,
+  },
+];
+
+export function getTierForUrlCount(urlCount: number): PricingTier | null {
+  return pricingTiers.find(t => urlCount >= t.minUrls && urlCount <= t.maxUrls) ?? null;
+}
+
 export function calculatePrice(urlCount: number): number {
-  if (urlCount <= 10) return 10000;
-  if (urlCount <= 50) return 20000;
-  if (urlCount <= 200) return 50000;
-  if (urlCount <= 500) return 90000;
-  if (urlCount <= 1000) return 120000;
-  return -1;
+  const tier = getTierForUrlCount(urlCount);
+  return tier ? tier.priceMonthly : -1;
 }
 
 export function formatPrice(cents: number): string {
-  return `$${(cents / 100).toFixed(0)}`;
+  return `$${(cents / 100).toFixed(2)}`;
 }
 
 export function getPricingTier(urlCount: number): string {
-  if (urlCount <= 10) return '1-10 URLs';
-  if (urlCount <= 50) return '11-50 URLs';
-  if (urlCount <= 200) return '51-200 URLs';
-  if (urlCount <= 500) return '201-500 URLs';
-  if (urlCount <= 1000) return '501-1000 URLs';
-  return '>1000 URLs';
+  const tier = getTierForUrlCount(urlCount);
+  return tier ? tier.urlRange : 'Custom';
 }

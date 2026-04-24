@@ -10,6 +10,7 @@ import { Admin } from './pages/Admin';
 import { About } from './pages/About';
 import { Contact } from './pages/Contact';
 import { FAQ } from './pages/FAQ';
+import { Pricing } from './pages/Pricing';
 import { Terms } from './pages/Terms';
 import { Privacy } from './pages/Privacy';
 import { Demo } from './pages/Demo';
@@ -64,6 +65,7 @@ function AppContent() {
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/faq" element={<FAQ />} />
+          <Route path="/pricing" element={<Pricing />} />
           <Route path="/terms" element={<Terms />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/demo" element={<Demo />} />
