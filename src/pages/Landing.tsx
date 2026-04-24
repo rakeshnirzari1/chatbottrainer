@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Zap, Shield, TrendingUp, Check, MessageSquare, Clock, Globe, BarChart3, Users } from 'lucide-react';
-import { pricingTiers, formatPrice } from '../lib/pricing';
+import { Bot, Zap, Shield, TrendingUp, CheckCircle, MessageSquare, Clock, Globe, BarChart3, Users, Lock } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
@@ -274,74 +273,62 @@ export function Landing() {
 
       <section className="py-20 bg-gradient-to-br from-blue-50 to-slate-50">
         <div className="container mx-auto px-6">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-14">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-12">
               <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
                 Simple, Transparent Pricing
               </h2>
               <p className="text-xl text-gray-600">
-                Monthly plans that scale with your business. Cancel anytime.
+                One-time payment based on your website size. No subscriptions or hidden fees.
               </p>
             </div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {pricingTiers.map((tier) => (
-                <div
-                  key={tier.id}
-                  className={`relative bg-white p-8 rounded-2xl border-2 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 ${
-                    tier.popular
-                      ? 'border-blue-500 ring-2 ring-blue-100'
-                      : 'border-gray-200 hover:border-blue-300'
-                  }`}
-                >
-                  {tier.popular && (
-                    <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1.5 bg-blue-600 text-white text-xs font-bold rounded-full whitespace-nowrap shadow-lg">
-                      MOST POPULAR
-                    </div>
-                  )}
-                  <h3 className="text-lg font-bold text-gray-900 mb-1">{tier.name}</h3>
-                  <p className="text-sm text-gray-500 mb-5">{tier.urlRange}</p>
-                  <div className="flex items-baseline gap-1 mb-6">
-                    <span className="text-4xl font-bold text-gray-900">
-                      {formatPrice(tier.priceMonthly)}
-                    </span>
-                    <span className="text-gray-500 font-medium">/mo</span>
-                  </div>
-                  <ul className="space-y-2.5 mb-8">
-                    <li className="flex items-center gap-2 text-sm text-gray-700">
-                      <Check className="text-green-500 flex-shrink-0" size={16} />
-                      Unlimited conversations
-                    </li>
-                    <li className="flex items-center gap-2 text-sm text-gray-700">
-                      <Check className="text-green-500 flex-shrink-0" size={16} />
-                      Easy embed integration
-                    </li>
-                    <li className="flex items-center gap-2 text-sm text-gray-700">
-                      <Check className="text-green-500 flex-shrink-0" size={16} />
-                      Email support
-                    </li>
-                  </ul>
-                  <button
-                    onClick={handleGetStarted}
-                    className={`w-full py-3 rounded-xl font-semibold text-white transition ${
+            <div className="bg-white p-10 rounded-2xl shadow-lg border border-gray-100">
+              <div className="space-y-4 mb-8">
+                {[
+                  { range: '1-10 URLs', price: '$100', popular: false },
+                  { range: '11-50 URLs', price: '$200', popular: true },
+                  { range: '51-200 URLs', price: '$500', popular: false },
+                  { range: '201-500 URLs', price: '$900', popular: false },
+                  { range: '501-1,000 URLs', price: '$1,200', popular: false }
+                ].map((tier) => (
+                  <div
+                    key={tier.range}
+                    className={`flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 p-4 rounded-xl border-2 transition ${
                       tier.popular
-                        ? 'bg-blue-600 hover:bg-blue-700'
-                        : 'bg-gray-900 hover:bg-gray-800'
+                        ? 'border-blue-600 bg-blue-50'
+                        : 'border-gray-200 bg-white hover:border-blue-300'
                     }`}
                   >
-                    Get Started
-                  </button>
-                </div>
-              ))}
-            </div>
+                    <div className="flex items-center gap-3">
+                      <CheckCircle className={tier.popular ? "text-blue-600 flex-shrink-0" : "text-green-500 flex-shrink-0"} size={24} />
+                      <span className="text-lg font-semibold text-gray-900">{tier.range}</span>
+                      {tier.popular && (
+                        <span className="px-3 py-1 bg-blue-600 text-white text-xs font-bold rounded-full whitespace-nowrap">
+                          MOST POPULAR
+                        </span>
+                      )}
+                    </div>
+                    <span className="text-2xl sm:text-3xl font-bold text-gray-900">{tier.price}</span>
+                  </div>
+                ))}
+              </div>
 
-            <div className="text-center mt-8">
-              <button
-                onClick={() => navigate('/pricing')}
-                className="text-blue-600 hover:text-blue-700 font-semibold transition underline underline-offset-4"
-              >
-                View full plan comparison
-              </button>
+              <div className="bg-gradient-to-br from-slate-50 to-blue-50 p-6 rounded-xl">
+                <div className="flex items-start gap-3 mb-3">
+                  <Lock className="text-blue-600 flex-shrink-0 mt-1" size={20} />
+                  <div>
+                    <h4 className="font-semibold text-gray-900 mb-1">What's Included:</h4>
+                    <ul className="text-gray-700 space-y-1 text-sm">
+                      <li>• AI-powered chatbot trained on your content</li>
+                      <li>• Unlimited conversations and messages</li>
+                      <li>• Easy website integration with embed code</li>
+                      <li>• Regular updates and improvements</li>
+                      <li>• Email support</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

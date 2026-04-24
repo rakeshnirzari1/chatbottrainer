@@ -42,9 +42,6 @@ export function Header({ onGetStarted, showAuthButtons = true, isAdminUser = fal
               <Link to="/about" className="text-gray-700 hover:text-blue-600 font-medium transition">
                 About
               </Link>
-              <Link to="/pricing" className="text-gray-700 hover:text-blue-600 font-medium transition">
-                Pricing
-              </Link>
               <Link to="/faq" className="text-gray-700 hover:text-blue-600 font-medium transition">
                 FAQ
               </Link>
@@ -122,12 +119,6 @@ export function Header({ onGetStarted, showAuthButtons = true, isAdminUser = fal
                   className="text-left px-4 py-2 text-gray-700 hover:bg-gray-50 rounded-lg font-medium transition"
                 >
                   About
-                </button>
-                <button
-                  onClick={() => handleNavClick('/pricing')}
-                  className="text-left px-4 py-2 text-gray-700 hover:bg-gray-50 rounded-lg font-medium transition"
-                >
-                  Pricing
                 </button>
                 <button
                   onClick={() => handleNavClick('/faq')}

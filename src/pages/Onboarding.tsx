@@ -191,7 +191,7 @@ export function Onboarding() {
 
     const price = calculatePrice(selectedUrls.size);
     if (price === -1) {
-      alert('Please contact us for custom pricing');
+      alert('Please select up to 1000 URLs or contact us for custom pricing');
       return;
     }
 
@@ -499,14 +499,22 @@ export function Onboarding() {
                 </div>
 
                 <div className="mb-6 p-4 bg-blue-50 rounded-lg">
-                  <div className="text-gray-600 text-sm mb-1">Estimated Monthly Price</div>
+                  <div className="text-gray-600 text-sm mb-1">Estimated Price</div>
                   <div className="text-3xl font-bold text-blue-600">
-                    {canProceed ? `${formatPrice(price)}/mo` : 'Custom'}
+                    {canProceed ? formatPrice(price) : 'Custom'}
                   </div>
                   <p className="text-xs text-gray-600 mt-2">
-                    Get your free demo first, then subscribe when ready
+                    Get your free demo first, then upgrade when ready
                   </p>
                 </div>
+
+                {!canProceed && (
+                  <div className="mb-4 p-3 bg-orange-50 border border-orange-200 rounded-lg">
+                    <p className="text-xs sm:text-sm text-orange-800">
+                      Please select up to 1000 URLs or contact us for custom pricing
+                    </p>
+                  </div>
+                )}
 
                 <button
                   onClick={handleRequestDemo}
@@ -526,19 +534,23 @@ export function Onboarding() {
                 <div className="mt-6 pt-6 border-t border-gray-200 text-xs text-gray-500 space-y-1">
                   <div className="flex justify-between">
                     <span>1-10 URLs</span>
-                    <span className="font-semibold">$9.99/mo</span>
+                    <span className="font-semibold">$100</span>
                   </div>
                   <div className="flex justify-between">
-                    <span>11-100 URLs</span>
-                    <span className="font-semibold">$19.99/mo</span>
+                    <span>11-50 URLs</span>
+                    <span className="font-semibold">$200</span>
                   </div>
                   <div className="flex justify-between">
-                    <span>101-500 URLs</span>
-                    <span className="font-semibold">$29.99/mo</span>
+                    <span>51-200 URLs</span>
+                    <span className="font-semibold">$500</span>
                   </div>
                   <div className="flex justify-between">
-                    <span>500+ URLs</span>
-                    <span className="font-semibold">$49.99/mo</span>
+                    <span>201-500 URLs</span>
+                    <span className="font-semibold">$900</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>501-1000 URLs</span>
+                    <span className="font-semibold">$1,200</span>
                   </div>
                 </div>
               </div>

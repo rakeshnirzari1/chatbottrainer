@@ -10,7 +10,6 @@ import { Admin } from './pages/Admin';
 import { About } from './pages/About';
 import { Contact } from './pages/Contact';
 import { FAQ } from './pages/FAQ';
-import { Pricing } from './pages/Pricing';
 import { Terms } from './pages/Terms';
 import { Privacy } from './pages/Privacy';
 import { Demo } from './pages/Demo';
@@ -65,7 +64,6 @@ function AppContent() {
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/faq" element={<FAQ />} />
-          <Route path="/pricing" element={<Pricing />} />
           <Route path="/terms" element={<Terms />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/demo" element={<Demo />} />
@@ -80,31 +78,13 @@ function AppContent() {
     </>
   );
 }
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { LoginPage } from './pages/LoginPage';
-import { SignupPage } from './pages/SignupPage';
-import { DashboardPage } from './pages/DashboardPage';
-import { SuccessPage } from './pages/SuccessPage';
-import { ProtectedRoute } from './components/auth/ProtectedRoute';
-import { PricingSection } from './components/pricing/PricingSection';
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/signup" element={<SignupPage />} />
-        <Route path="/success" element={<SuccessPage />} />
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute>
-              <DashboardPage />
-            </ProtectedRoute>
-          }
-        />
-        <Route path="/" element={<PricingSection />} />
-      </Routes>
-    </Router>
-  )
+    <BrowserRouter>
+      <AppContent />
+    </BrowserRouter>
+  );
 }
+
+export default App;
