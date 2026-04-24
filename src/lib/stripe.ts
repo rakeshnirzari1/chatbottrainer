@@ -14,7 +14,7 @@ export async function createCheckoutSession({
   cancelUrl,
 }: CreateCheckoutSessionParams): Promise<{ sessionId: string; url: string }> {
   const { data: { session } } = await supabase.auth.getSession();
-  
+
   if (!session?.access_token) {
     throw new Error('User not authenticated');
   }
@@ -39,4 +39,25 @@ export async function createCheckoutSession({
   }
 
   return response.json();
+}
+
+export async function updateOrderStatus(orderId: string, status: string, stripeSessionId?: string) {
+  const updateData: Record<string, string> = { status };
+
+  if (stripeSessionId) {
+    updateData.stripe_session_id = stripeSessionId;
+  }
+
+  if (status === 'ready' || status === 'payment_received') {
+    updateData.paid_at = new Date().toISOString();
+  }
+
+  const { error } = await supabase
+    .from('orders')
+    .update(updateData)
+    .eq('id', orderId);
+
+  if (error) {
+    throw error;
+  }
 }
